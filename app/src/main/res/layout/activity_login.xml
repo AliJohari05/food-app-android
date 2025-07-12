@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bgregister"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="150dp"
+        android:text="Food4U"
+        android:textAlignment="center"
+        android:textColor="#FF9800"
+        android:textSize="34sp" />
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_margin="0dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/bgbuttonregister"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="0dp">
+
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/green_primary"
+            android:hint="@string/phone"
+            android:inputType="phone"
+            android:paddingLeft="0dp"
+            android:textColorHint="#FF9800" />
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/green_primary"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:paddingLeft="0dp"
+            android:textColorHint="#FF9800" />
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="48dp"
+            android:background="@drawable/bgbuttonregister"
+            android:text="@string/login" />
+    </LinearLayout>
+
+</LinearLayout>

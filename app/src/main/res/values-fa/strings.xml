@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">اپ سفارش غذا</string>
+    <string name="full_name">نام و نام خانوادگی</string>
+    <string name="phone">شماره تماس</string>
+    <string name="email">ایمیل (اختیاری)</string>
+    <string name="password">رمز عبور</string>
+    <string name="address">آدرس</string>
+    <string name="register">ثبت‌نام</string>
+    <string name="login">ورود</string>
+    <string name="DoYouHaveAnAccount">آیا پروفایل شخصی از قبل دارید ؟</string>
+
+    <string-array name="user_roles">
+        <item>خریدار</item>
+        <item>فروشنده</item>
+        <item>پیک</item>
+    </string-array>
+</resources>

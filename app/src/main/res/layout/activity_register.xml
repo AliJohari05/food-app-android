@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bgregister"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Welcome To Food4U"
+            android:textAlignment="center"
+            android:textColor="#FF9800"
+            android:textSize="34sp" />
+
+        <EditText
+            android:id="@+id/etFullName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/green_primary"
+            android:drawableTint="#FF9800"
+            android:foregroundTint="#FF9800"
+            android:hint="@string/full_name"
+            android:textColor="@color/black"
+            android:textColorHint="#FF9800" />
+
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/green_primary"
+            android:hint="@string/phone"
+            android:inputType="phone"
+            android:textColorHint="#FF9800" />
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/green_primary"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:textColorHint="#FF9800" />
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/green_primary"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:textColorHint="#FF9800" />
+
+        <EditText
+            android:id="@+id/etAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/green_primary"
+            android:hint="@string/address"
+            android:textColorHint="#FF9800" />
+
+        <Spinner
+            android:id="@+id/spinnerRole"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/green_primary"
+            android:entries="@array/user_roles" />
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:background="@drawable/bgbuttonregister"
+            android:text="@string/register" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvLoginPrompt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="64dp"
+                android:layout_weight="70"
+                android:paddingRight="8dp"
+                android:text="Do you have an account?"
+                android:textAlignment="textEnd"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textViewLogin"
+                style="@android:style/Widget.DeviceDefault.TextView.SpinnerItem"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="64dp"
+                android:layout_weight="30"
+                android:backgroundTint="#03A9F4"
+                android:outlineProvider="none"
+                android:text="Login"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="#03A9F4"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
