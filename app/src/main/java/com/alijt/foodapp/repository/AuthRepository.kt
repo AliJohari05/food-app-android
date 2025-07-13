@@ -54,4 +54,48 @@ class AuthRepository {
             Result.failure(e)
         }
     }
+
+
+    suspend fun fetchUserProfile(token: String): Result<User> {
+        return try {
+            val response = apiService.getUserProfile(token)
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    Result.success(it)
+                } ?: Result.failure(Exception("Empty user profile response body"))
+            } else {
+                val errorBody = response.errorBody()?.string()
+                val errorMessage = try {
+                    Gson().fromJson(errorBody, ErrorResponse::class.java).error
+                } catch (e: Exception) {
+                    "Failed to fetch profile: ${response.code()}"
+                }
+                Result.failure(Exception(errorMessage))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    // 
+    suspend fun updateUserProfile(token: String, request: ProfileUpdateRequest): Result<MessageResponse> {
+        return try {
+            val response = apiService.updateUserProfile(token, request)
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    Result.success(it)
+                } ?: Result.failure(Exception("Empty update profile response body"))
+            } else {
+                val errorBody = response.errorBody()?.string()
+                val errorMessage = try {
+                    Gson().fromJson(errorBody, ErrorResponse::class.java).error
+                } catch (e: Exception) {
+                    "Failed to update profile: ${response.code()}"
+                }
+                Result.failure(Exception(errorMessage))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }
