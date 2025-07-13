@@ -26,10 +26,11 @@ class RegisterActivity : AppCompatActivity() {
 
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        sessionManager = SessionManager(this)
 
         // Initialize ViewModel and SessionManager
         val repository = AuthRepository()
-        authViewModel = ViewModelProvider(this, AuthViewModelFactory(repository)).get(AuthViewModel::class.java)
+        authViewModel = ViewModelProvider(this, AuthViewModelFactory(repository,sessionManager)).get(AuthViewModel::class.java)
         sessionManager = SessionManager(this)
 
         // Set up spinner for user roles

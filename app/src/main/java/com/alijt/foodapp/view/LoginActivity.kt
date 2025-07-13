@@ -13,6 +13,7 @@ import com.alijt.foodapp.repository.AuthRepository
 import com.alijt.foodapp.utils.SessionManager
 import com.alijt.foodapp.viewmodel.AuthViewModel
 import com.alijt.foodapp.viewmodel.AuthViewModelFactory
+import com.alijt.foodapp.view.DashboardActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -26,10 +27,11 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Initialize ViewModel and SessionManager
-        val repository = AuthRepository()
-        authViewModel = ViewModelProvider(this, AuthViewModelFactory(repository)).get(AuthViewModel::class.java)
         sessionManager = SessionManager(this)
+
+        // Initialize ViewModel and pass sessionManager to its factory
+        val repository = AuthRepository()
+        authViewModel = ViewModelProvider(this, AuthViewModelFactory(repository, sessionManager)).get(AuthViewModel::class.java) // Corrected line: pass sessionManager
 
         // Handle navigation to RegisterActivity
         binding.textViewRegister.setOnClickListener {

@@ -30,6 +30,22 @@
     <string name="seller_dashboard_title">داشبورد فروشنده</string>
     <string name="courier_dashboard_title">داشبورد پیک</string>
     <string name="admin_dashboard_title">داشبورد ادمین</string>
+    <string name="profile_title">پروفایل کاربری</string>
+    <string name="update_profile">به‌روزرسانی پروفایل</string>
+    <string name="profile_updated_successfully">پروفایل با موفقیت به‌روزرسانی شد!</string>
+    <string name="failed_to_update_profile">خطا در به‌روزرسانی پروفایل.</string>
+    <string name="failed_to_load_profile">خطا در بارگذاری اطلاعات پروفایل.</string>
+    <string name="save_changes">ذخیره تغییرات</string>
+    <string name="name_label">نام و نام خانوادگی:</string>
+    <string name="phone_label">شماره تماس:</string>
+    <string name="email_label">ایمیل (اختیاری):</string>
+    <string name="address_label">آدرس:</string>
+    <string name="bank_info_label">اطلاعات بانکی:</string>
+    <string name="bank_name_label">نام بانک:</string>
+    <string name="account_number_label">شماره حساب:</string>
+    <string name="profile_picture_label">عکس پروفایل:</string>
+    <string name="select_image">انتخاب عکس</string>
+    <string name="view_profile">مشاهده پروفایل</string>
     <string-array name="user_roles">
         <item>خریدار</item>
         <item>فروشنده</item>

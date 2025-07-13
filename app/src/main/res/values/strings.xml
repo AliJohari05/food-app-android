@@ -30,6 +30,23 @@
     <string name="seller_dashboard_title">Seller Dashboard</string>
     <string name="courier_dashboard_title">Courier Dashboard</string>
     <string name="admin_dashboard_title">Admin Dashboard</string>
+    <string name="profile_title">User Profile</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="profile_updated_successfully">Profile updated successfully!</string>
+    <string name="failed_to_update_profile">Failed to update profile.</string>
+    <string name="failed_to_load_profile">Failed to load profile data.</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="name_label">Full Name:</string>
+    <string name="phone_label">Phone:</string>
+    <string name="email_label">Email (Optional):</string>
+    <string name="address_label">Address:</string>
+    <string name="bank_info_label">Bank Information:</string>
+    <string name="bank_name_label">Bank Name:</string>
+    <string name="account_number_label">Account Number:</string>
+    <string name="profile_picture_label">Profile Picture:</string>
+    <string name="select_image">Select Image</string>
+    <string name="view_profile">View Profile</string>
+
     <string-array name="user_roles">
         <item>Buyer</item>
         <item>Seller</item>

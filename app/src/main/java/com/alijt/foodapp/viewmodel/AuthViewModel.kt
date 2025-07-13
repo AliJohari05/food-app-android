@@ -6,12 +6,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alijt.foodapp.model.AuthResponse
 import com.alijt.foodapp.model.LoginRequest
+import com.alijt.foodapp.model.MessageResponse // Import MessageResponse
+import com.alijt.foodapp.model.ProfileUpdateRequest // Import ProfileUpdateRequest
 import com.alijt.foodapp.model.RegisterRequest
+import com.alijt.foodapp.model.User // Import User model
 import com.alijt.foodapp.repository.AuthRepository
+import com.alijt.foodapp.utils.SessionManager // Import SessionManager
 import kotlinx.coroutines.launch
 
-class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
+// Corrected constructor to include SessionManager
+class AuthViewModel(
+    private val repository: AuthRepository,
+    private val sessionManager: SessionManager // SessionManager is injected here
+) : ViewModel() {
 
+    // LiveData for Register
     private val _registerResult = MutableLiveData<Result<AuthResponse>>()
     val registerResult: LiveData<Result<AuthResponse>> = _registerResult
 
@@ -31,7 +40,7 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
     private val _userProfile = MutableLiveData<Result<User>>()
     val userProfile: LiveData<Result<User>> = _userProfile
 
-    // Function to fetch user profile
+
     fun fetchUserProfile() { // Corrected: removed 'request' parameter
         viewModelScope.launch {
             val token = sessionManager.getAuthToken() // Get token from SessionManager

@@ -1,6 +1,11 @@
 package com.alijt.foodapp.model
 
+import com.google.gson.annotations.SerializedName
+
+
 data class BankInfo(
-    val bank_name: String,
-    val account_number: String
+    @SerializedName("bank_name")
+    val bank_name: String?,
+    @SerializedName("account_number")
+    val account_number: String?
 )
