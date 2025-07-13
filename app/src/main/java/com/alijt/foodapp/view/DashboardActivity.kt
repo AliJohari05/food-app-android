@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment
 import com.alijt.foodapp.R
 import com.alijt.foodapp.databinding.ActivityDashboardBinding
 import com.alijt.foodapp.utils.SessionManager
-import com.alijt.foodapp.view.dashboard.AdminDashboardFragment // We will create these
-import com.alijt.foodapp.view.dashboard.BuyerDashboardFragment // We will create these
-import com.alijt.foodapp.view.dashboard.CourierDashboardFragment // We will create these
-import com.alijt.foodapp.view.dashboard.SellerDashboardFragment // We will create these
+import com.alijt.foodapp.view.dashboard.AdminDashboardFragment
+import com.alijt.foodapp.view.dashboard.BuyerDashboardFragment
+import com.alijt.foodapp.view.dashboard.CourierDashboardFragment
+import com.alijt.foodapp.view.dashboard.SellerDashboardFragment
 
 
 class DashboardActivity : AppCompatActivity() {
