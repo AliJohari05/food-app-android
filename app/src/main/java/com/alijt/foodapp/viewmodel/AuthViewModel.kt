@@ -27,4 +27,36 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
             _loginResult.value = repository.loginUser(request)
         }
     }
+
+    private val _userProfile = MutableLiveData<Result<User>>()
+    val userProfile: LiveData<Result<User>> = _userProfile
+
+    // Function to fetch user profile
+    fun fetchUserProfile() { // Corrected: removed 'request' parameter
+        viewModelScope.launch {
+            val token = sessionManager.getAuthToken() // Get token from SessionManager
+            if (token != null) {
+                _userProfile.value = repository.fetchUserProfile(token)
+            } else {
+                // Handle case where token is null (e.g., user not logged in)
+                _userProfile.value = Result.failure(Exception("Authentication token not found."))
+            }
+        }
+    }
+
+    private val _profileUpdateResult = MutableLiveData<Result<MessageResponse>>()
+    val profileUpdateResult: LiveData<Result<MessageResponse>> = _profileUpdateResult
+
+    // Function to update user profile
+    fun updateUserProfile(request: ProfileUpdateRequest) {
+        viewModelScope.launch {
+            val token = sessionManager.getAuthToken() // Get token from SessionManager
+            if (token != null) {
+                _profileUpdateResult.value = repository.updateUserProfile(token, request)
+            } else {
+                // Handle case where token is null
+                _profileUpdateResult.value = Result.failure(Exception("Authentication token not found."))
+            }
+        }
+    }
 }
