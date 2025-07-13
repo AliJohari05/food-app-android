@@ -9,6 +9,27 @@
     <string name="login">Login</string>
     <string name="DoYouHaveAnAccount">Do you have an account?</string>
 
+    <string name="fill_all_required_fields">Please fill in all required fields.</string>
+    <string name="enter_valid_phone">Please enter a valid phone number.</string>
+    <string name="enter_valid_email">Please enter a valid email address.</string>
+    <string name="password_min_length">Password must be at least 6 characters long.</string>
+    <string name="registration_failed">Registration failed</string>
+    <string name="registration_successful">Registration successful</string>
+
+    <string name="app_title_welcome">Welcome to Food4U</string>
+    <string name="dont_have_account_prompt">Don\'t have an account?</string>
+    <string name="login_failed">Login failed. Please check your credentials.</string>
+    <string name="login_successful">Login successful!</string>
+    <string name="welcome_message_buyer">Welcome, Buyer!</string>
+    <string name="welcome_message_seller">Welcome, Seller!</string>
+    <string name="welcome_message_courier">Welcome, Courier!</string>
+    <string name="welcome_message_admin">Welcome, Admin!</string>
+    <string name="unknown_role_message">Unknown user role. Please log in again.</string>
+    <string name="logout">Logout</string>
+    <string name="buyer_dashboard_title">Buyer Dashboard</string>
+    <string name="seller_dashboard_title">Seller Dashboard</string>
+    <string name="courier_dashboard_title">Courier Dashboard</string>
+    <string name="admin_dashboard_title">Admin Dashboard</string>
     <string-array name="user_roles">
         <item>Buyer</item>
         <item>Seller</item>

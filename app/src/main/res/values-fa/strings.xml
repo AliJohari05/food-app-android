@@ -9,6 +9,27 @@
     <string name="login">ورود</string>
     <string name="DoYouHaveAnAccount">آیا پروفایل شخصی از قبل دارید ؟</string>
 
+    <string name="fill_all_required_fields">لطفاً تمامی فیلدهای الزامی را پر کنید.</string>
+    <string name="enter_valid_phone">لطفاً شماره تماس معتبر وارد کنید.</string>
+    <string name="enter_valid_email">لطفاً ایمیل معتبر وارد کنید.</string>
+    <string name="password_min_length">رمز عبور باید حداقل ۶ کاراکتر باشد.</string>
+    <string name="registration_failed">ثبت‌نام ناموفق بود</string>
+    <string name="registration_successful">ثبت‌نام با موفقیت انجام شد</string>
+
+    <string name="app_title_welcome">به Food4U خوش آمدید</string>
+    <string name="dont_have_account_prompt">حساب کاربری ندارید؟</string>
+    <string name="login_failed">ورود ناموفق بود. لطفاً اطلاعات کاربری خود را بررسی کنید.</string>
+    <string name="login_successful">ورود با موفقیت انجام شد!</string>
+    <string name="welcome_message_buyer">خوش آمدید، خریدار!</string>
+    <string name="welcome_message_seller">خوش آمدید، فروشنده!</string>
+    <string name="welcome_message_courier">خوش آمدید، پیک!</string>
+    <string name="welcome_message_admin">خوش آمدید، ادمین!</string>
+    <string name="unknown_role_message">نقش کاربری نامشخص. لطفاً مجدداً وارد شوید.</string>
+    <string name="logout">خروج</string>
+    <string name="buyer_dashboard_title">داشبورد خریدار</string>
+    <string name="seller_dashboard_title">داشبورد فروشنده</string>
+    <string name="courier_dashboard_title">داشبورد پیک</string>
+    <string name="admin_dashboard_title">داشبورد ادمین</string>
     <string-array name="user_roles">
         <item>خریدار</item>
         <item>فروشنده</item>
