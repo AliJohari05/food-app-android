@@ -61,6 +61,17 @@
     <string name="no_menu_items_found">هیچ آیتم منویی برای این رستوران یافت نشد.</string>
     <string name="failed_to_load_menu">خطا در بارگذاری منو.</string>
 
+        <string name="admin_dashboard_users_title">همه کاربران</string>
+        <string name="user_id_format">شناسه: %s</string>
+        <string name="user_role_format">نقش: %s</string>
+        <string name="user_status_format">وضعیت: %s</string>
+        <string name="action_approve">تأیید</string>
+        <string name="action_reject">رد</string>
+        <string name="user_status_updated">وضعیت کاربر با موفقیت به‌روزرسانی شد!</string>
+        <string name="failed_to_update_user_status">خطا در به‌روزرسانی وضعیت کاربر.</string>
+        <string name="failed_to_load_users">خطا در بارگذاری کاربران.</string>
+        <string name="no_users_found">هیچ کاربری یافت نشد.</string>
+
     <string name="menu_title">آیتم‌های منو</string>
 
     <string-array name="user_roles">

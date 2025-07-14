@@ -59,6 +59,17 @@
     <string name="no_menu_items_found">No menu items found for this restaurant.</string>
     <string name="failed_to_load_menu">Failed to load menu.</string>
 
+        <string name="admin_dashboard_users_title">All Users</string>
+        <string name="user_id_format">ID: %s</string>
+        <string name="user_role_format">Role: %s</string>
+        <string name="user_status_format">Status: %s</string>
+        <string name="action_approve">Approve</string>
+        <string name="action_reject">Reject</string>
+        <string name="user_status_updated">User status updated successfully!</string>
+        <string name="failed_to_update_user_status">Failed to update user status.</string>
+        <string name="failed_to_load_users">Failed to load users.</string>
+        <string name="no_users_found">No users found.</string>
+
     <string name="menu_title">Menu Items</string>
 
     <string-array name="user_roles">
