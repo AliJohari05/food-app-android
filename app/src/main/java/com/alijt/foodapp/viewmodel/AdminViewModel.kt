@@ -1,4 +1,3 @@
-// FoodApp/app/src/main/java/com/alijt/foodapp/viewmodel/AdminViewModel.kt
 package com.alijt.foodapp.viewmodel
 
 import androidx.lifecycle.LiveData
