@@ -1,4 +1,3 @@
-// FoodApp/app/src/main/java/com/alijt/foodapp/network/ApiService.kt
 package com.alijt.foodapp.network
 
 import com.alijt.foodapp.model.AuthResponse
@@ -6,15 +5,18 @@ import com.alijt.foodapp.model.LoginRequest
 import com.alijt.foodapp.model.MessageResponse
 import com.alijt.foodapp.model.ProfileUpdateRequest
 import com.alijt.foodapp.model.RegisterRequest
+import com.alijt.foodapp.model.Restaurant
 import com.alijt.foodapp.model.User
-import com.alijt.foodapp.model.Restaurant // Import Restaurant model
-import com.alijt.foodapp.model.VendorListRequest // Import VendorListRequest
+import com.alijt.foodapp.model.UserStatusUpdateRequest // Import UserStatusUpdateRequest
+import com.alijt.foodapp.model.VendorListRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.PATCH // Import PATCH
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Path // Import Path
 
 interface ApiService {
 
@@ -32,4 +34,15 @@ interface ApiService {
 
     @POST("vendors")
     suspend fun getVendors(@Header("Authorization") token: String, @Body request: VendorListRequest): Response<List<Restaurant>>
+
+    // Admin APIs for User Management
+    @GET("admin/users")
+    suspend fun getAllUsers(@Header("Authorization") token: String): Response<List<User>>
+
+    @PATCH("admin/users/{id}/status")
+    suspend fun updateUserStatus(
+        @Header("Authorization") token: String,
+        @Path("id") userId: String, // User ID from path
+        @Body request: UserStatusUpdateRequest
+    ): Response<MessageResponse>
 }

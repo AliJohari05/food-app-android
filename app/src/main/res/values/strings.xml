@@ -46,6 +46,20 @@
     <string name="profile_picture_label">Profile Picture:</string>
     <string name="select_image">Select Image</string>
     <string name="view_profile">View Profile</string>
+    <string name="restaurants_list_title">Restaurants</string>
+    <string name="no_restaurants_found">No restaurants found.</string>
+    <string name="failed_to_load_restaurants">Failed to load restaurants.</string>
+    <string name="search_hint">Search restaurants...</string>
+    <string name="rating_format">Rating: %s</string>
+
+    <string name="price_format">Price: $%.2f</string>
+    <string name="supply_format">In stock: %d</string>
+    <string name="restaurant_id_format">Restaurant ID: %d</string>
+    <string name="error_invalid_restaurant_id">Invalid restaurant ID.</string>
+    <string name="no_menu_items_found">No menu items found for this restaurant.</string>
+    <string name="failed_to_load_menu">Failed to load menu.</string>
+
+    <string name="menu_title">Menu Items</string>
 
     <string-array name="user_roles">
         <item>Buyer</item>

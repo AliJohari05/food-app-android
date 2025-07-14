@@ -43,9 +43,26 @@
     <string name="bank_info_label">اطلاعات بانکی:</string>
     <string name="bank_name_label">نام بانک:</string>
     <string name="account_number_label">شماره حساب:</string>
+
     <string name="profile_picture_label">عکس پروفایل:</string>
     <string name="select_image">انتخاب عکس</string>
     <string name="view_profile">مشاهده پروفایل</string>
+
+    <string name="restaurants_list_title">رستوران‌ها</string>
+    <string name="no_restaurants_found">هیچ رستورانی یافت نشد.</string>
+    <string name="failed_to_load_restaurants">خطا در بارگذاری رستوران‌ها.</string>
+    <string name="search_hint">جستجوی رستوران‌ها...</string>
+    <string name="rating_format">امتیاز: %s</string>
+
+    <string name="price_format">قیمت: %.2f تومان</string>
+    <string name="supply_format">موجود در انبار: %d</string>
+    <string name="restaurant_id_format">شناسه رستوران: %d</string>
+    <string name="error_invalid_restaurant_id">شناسه رستوران نامعتبر است.</string>
+    <string name="no_menu_items_found">هیچ آیتم منویی برای این رستوران یافت نشد.</string>
+    <string name="failed_to_load_menu">خطا در بارگذاری منو.</string>
+
+    <string name="menu_title">آیتم‌های منو</string>
+
     <string-array name="user_roles">
         <item>خریدار</item>
         <item>فروشنده</item>

@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
     android:padding="16dp"
     tools:context=".view.dashboard.BuyerDashboardFragment">
 
@@ -12,15 +11,33 @@
         android:id="@+id/tvBuyerDashboard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/buyer_dashboard_title"
+        android:text="@string/restaurants_list_title"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_marginBottom="24dp" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:id="@+id/etSearchRestaurant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/search_hint"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:layout_marginBottom="16dp" />
 
     <Button
         android:id="@+id/btnViewProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/view_profile" />
+        android:text="@string/view_profile"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRestaurants"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_restaurant" />
 
 </LinearLayout>

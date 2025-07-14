@@ -3,15 +3,17 @@ package com.alijt.foodapp.model
 import com.google.gson.annotations.SerializedName
 
 data class User(
-    val id: String,
+    val id: String, // As String to match potential backend type
+    @SerializedName("full_name") val fullName: String, // Ensure matches backend (snake_case in YAML)
     val phone: String,
-    val role: String,
-    @SerializedName("full_name")
-    val fullName: String?, // Make it nullable if it can be null from backend
     val email: String?,
+    val role: String,
     val address: String?,
-    @SerializedName("profileImageUrl") // If your backend sends a URL for the image
-    val profileImageUrl: String?,
-    @SerializedName("bank_info")
-    val bank_info: BankInfo?
+    @SerializedName("profileImageBase64") val profileImageBase64: String?, // For images
+    @SerializedName("profileImageUrl") val profileImageUrl: String?, // Also exists in Restaurant owner, but might be here too
+    val bank_info: BankInfo?,
+    val status: String?, // For user status (APPROVED, REJECTED, etc.)
+    @SerializedName("wallet_balance") val walletBalance: Double?,
+    @SerializedName("created_at") val createdAt: String?,
+    @SerializedName("updated_at") val updatedAt: String?
 )
