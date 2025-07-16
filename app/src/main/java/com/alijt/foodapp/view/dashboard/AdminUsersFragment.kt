@@ -61,9 +61,7 @@ class AdminUsersFragment : Fragment() {
     private fun observeViewModels() {
         adminViewModel.usersList.observe(viewLifecycleOwner) { result ->
             when (result) {
-                is Result.Loading -> {
-                    binding.progressBarUsers.visibility = View.VISIBLE
-                }
+                is Result.Loading -> { binding.progressBarUsers.visibility = View.VISIBLE }
                 is Result.Success -> {
                     userListAdapter.submitList(result.data)
                     binding.progressBarUsers.visibility = View.GONE
@@ -75,14 +73,15 @@ class AdminUsersFragment : Fragment() {
             }
         }
 
-        adminViewModel.userStatusUpdateResult.observe(viewLifecycleOwner) { result ->
+        adminViewModel.userStatusUpdateResult.observe(viewLifecycleOwner) { result -> // <-- observe تغییر می‌کند
             when (result) {
                 is Result.Loading -> {
                     // نمایش لودینگ
                 }
                 is Result.Success -> {
-                    Toast.makeText(requireContext(), result.data, Toast.LENGTH_SHORT).show() // <-- تغییر: از result.data استفاده شد
-                    adminViewModel.fetchAllUsers() // رفرش لیست پس از به‌روزرسانی
+                    Toast.makeText(requireContext(), result.data, Toast.LENGTH_SHORT).show()
+                    // لیست کاربران پس از به‌روزرسانی در ViewModel رفرش می‌شود.
+                    // adminViewModel.fetchAllUsers() // این خط نیازی نیست اگر ViewModel خودش رفرش می‌کند
                 }
                 is Result.Failure -> {
                     Toast.makeText(requireContext(), getString(R.string.error_updating_user_status) + ": ${result.exception.message}", Toast.LENGTH_LONG).show()

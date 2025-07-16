@@ -90,7 +90,7 @@ class AdminCouponsFragment : Fragment() {
             }
         }
 
-        adminViewModel.couponCreateResult.observe(viewLifecycleOwner) { result ->
+        adminViewModel.couponCreateResult.observe(viewLifecycleOwner) { result -> // <-- observe تغییر می‌کند
             when (result) {
                 is Result.Loading -> { /* Show loading */ }
                 is Result.Success -> { Toast.makeText(requireContext(), getString(R.string.coupon_created_successfully), Toast.LENGTH_SHORT).show() }
@@ -98,7 +98,7 @@ class AdminCouponsFragment : Fragment() {
             }
         }
 
-        adminViewModel.couponUpdateResult.observe(viewLifecycleOwner) { result ->
+        adminViewModel.couponUpdateResult.observe(viewLifecycleOwner) { result -> // <-- observe تغییر می‌کند
             when (result) {
                 is Result.Loading -> { /* Show loading */ }
                 is Result.Success -> { Toast.makeText(requireContext(), getString(R.string.coupon_updated_successfully), Toast.LENGTH_SHORT).show() }
@@ -106,11 +106,11 @@ class AdminCouponsFragment : Fragment() {
             }
         }
 
-        adminViewModel.couponDeleteResult.observe(viewLifecycleOwner) { result ->
+        adminViewModel.couponDeleteResult.observe(viewLifecycleOwner) { result -> // <-- observe تغییر می‌کند
             when (result) {
                 is Result.Loading -> { /* Show loading */ }
                 is Result.Success -> {
-                    Toast.makeText(requireContext(), result.data, Toast.LENGTH_SHORT).show() // <-- تغییر: از result.data استفاده شد
+                    Toast.makeText(requireContext(), result.data, Toast.LENGTH_SHORT).show()
                 }
                 is Result.Failure -> {
                     Toast.makeText(requireContext(), getString(R.string.error_deleting_coupon) + ": ${result.exception.message}", Toast.LENGTH_LONG).show()
@@ -118,7 +118,7 @@ class AdminCouponsFragment : Fragment() {
             }
         }
 
-        adminViewModel.couponDetails.observe(viewLifecycleOwner) { result ->
+        adminViewModel.couponDetails.observe(viewLifecycleOwner) { result -> // <-- observe تغییر می‌کند
             when (result) {
                 is Result.Loading -> { /* Show loading */ }
                 is Result.Success -> { Toast.makeText(requireContext(), getString(R.string.coupon_details_loaded, result.data.coupon_code), Toast.LENGTH_SHORT).show() }

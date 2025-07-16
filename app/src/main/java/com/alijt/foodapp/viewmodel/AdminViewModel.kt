@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.alijt.foodapp.model.*
 import com.alijt.foodapp.repository.AdminRepository
 import com.alijt.foodapp.utils.SessionManager
+import com.alijt.foodapp.utils.SingleLiveEvent
 import kotlinx.coroutines.launch
 
 class AdminViewModel(
@@ -14,7 +15,6 @@ class AdminViewModel(
     private val sessionManager: SessionManager
 ) : ViewModel() {
 
-    // LiveData for various data lists
     private val _usersList = MutableLiveData<Result<List<User>>>()
     val usersList: LiveData<Result<List<User>>> = _usersList
 
@@ -27,23 +27,20 @@ class AdminViewModel(
     private val _couponsList = MutableLiveData<Result<List<Coupon>>>()
     val couponsList: LiveData<Result<List<Coupon>>> = _couponsList
 
-    // LiveData for specific operation results
-    // تغییر نوع LiveData به Result<String>
-    private val _userStatusUpdateResult = MutableLiveData<Result<String>>() // <-- تغییر
-    val userStatusUpdateResult: LiveData<Result<String>> = _userStatusUpdateResult // <-- تغییر
+    private val _userStatusUpdateResult = SingleLiveEvent<Result<String>>()
+    val userStatusUpdateResult: LiveData<Result<String>> = _userStatusUpdateResult 
 
-    private val _couponCreateResult = MutableLiveData<Result<Coupon>>()
-    val couponCreateResult: LiveData<Result<Coupon>> = _couponCreateResult
+    private val _couponCreateResult = SingleLiveEvent<Result<Coupon>>() // <-- تغییر
+    val couponCreateResult: LiveData<Result<Coupon>> = _couponCreateResult // <-- تغییر
 
-    private val _couponUpdateResult = MutableLiveData<Result<Coupon>>()
-    val couponUpdateResult: LiveData<Result<Coupon>> = _couponUpdateResult
+    private val _couponUpdateResult = SingleLiveEvent<Result<Coupon>>() // <-- تغییر
+    val couponUpdateResult: LiveData<Result<Coupon>> = _couponUpdateResult // <-- تغییر
 
-    // تغییر نوع LiveData به Result<String>
-    private val _couponDeleteResult = MutableLiveData<Result<String>>() // <-- تغییر
+    private val _couponDeleteResult = SingleLiveEvent<Result<String>>() // <-- تغییر
     val couponDeleteResult: LiveData<Result<String>> = _couponDeleteResult // <-- تغییر
 
-    private val _couponDetails = MutableLiveData<Result<Coupon>>()
-    val couponDetails: LiveData<Result<Coupon>> = _couponDetails
+    private val _couponDetails = SingleLiveEvent<Result<Coupon>>() // <-- تغییر
+    val couponDetails: LiveData<Result<Coupon>> = _couponDetails // <-- تغییر
 
     fun fetchAllUsers() {
         _usersList.value = Result.Loading
