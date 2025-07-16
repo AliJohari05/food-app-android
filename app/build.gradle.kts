@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -42,6 +43,10 @@ android {
 }
 
 dependencies {
+
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+
     // Exclude filament-android from material library if it's pulling it transitively
     implementation("com.google.android.material:material:1.10.0") {
         exclude(group = "com.google.ar.sceneform")
@@ -58,6 +63,9 @@ dependencies {
 
     // Glide for image loading
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.firebase.inappmessaging)
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0") // یا ksp برای آخرین AGP
 
     // Coroutine

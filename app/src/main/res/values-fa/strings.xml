@@ -61,16 +61,113 @@
     <string name="no_menu_items_found">هیچ آیتم منویی برای این رستوران یافت نشد.</string>
     <string name="failed_to_load_menu">خطا در بارگذاری منو.</string>
 
-        <string name="admin_dashboard_users_title">همه کاربران</string>
-        <string name="user_id_format">شناسه: %s</string>
-        <string name="user_role_format">نقش: %s</string>
-        <string name="user_status_format">وضعیت: %s</string>
-        <string name="action_approve">تأیید</string>
-        <string name="action_reject">رد</string>
-        <string name="user_status_updated">وضعیت کاربر با موفقیت به‌روزرسانی شد!</string>
-        <string name="failed_to_update_user_status">خطا در به‌روزرسانی وضعیت کاربر.</string>
-        <string name="failed_to_load_users">خطا در بارگذاری کاربران.</string>
-        <string name="no_users_found">هیچ کاربری یافت نشد.</string>
+    <string name="admin_dashboard_users_title">همه کاربران</string>
+    <string name="user_id_format">شناسه: %s</string>
+    <string name="user_role_format">نقش: %s</string>
+    <string name="user_status_format">وضعیت: %s</string>
+    <string name="action_approve">تأیید</string>
+    <string name="action_reject">رد</string>
+    <string name="user_status_updated">وضعیت کاربر با موفقیت به‌روزرسانی شد!</string>
+    <string name="failed_to_update_user_status">خطا در به‌روزرسانی وضعیت کاربر.</string>
+    <string name="failed_to_load_users">خطا در بارگذاری کاربران.</string>
+    <string name="no_users_found">هیچ کاربری یافت نشد.</string>
+
+
+
+    <string name="users_tab_title">کاربران</string>
+    <string name="orders_tab_title">سفارشات</string>
+    <string name="transactions_tab_title">تراکنش‌ها</string>
+    <string name="coupons_tab_title">کوپن‌ها</string>
+
+    <string name="approve_button_text">تأیید</string>
+    <string name="reject_button_text">رد</string>
+    <string name="user_phone_format">تلفن: %s</string>
+
+    <string name="error_fetching_users">خطا در دریافت کاربران</string>
+    <string name="user_status_updated_successfully">وضعیت کاربر با موفقیت بروزرسانی شد</string>
+    <string name="error_updating_user_status">خطا در بروزرسانی وضعیت کاربر</string>
+    <string name="authentication_token_not_found">توکن احراز هویت یافت نشد.</string>
+
+    <string name="error_fetching_orders">خطا در دریافت سفارشات</string>
+    <string name="error_fetching_transactions">خطا در دریافت تراکنش‌ها</string>
+    <string name="error_fetching_coupons">خطا در دریافت کوپن‌ها</string>
+
+    <string name="coupon_created_successfully">کوپن با موفقیت ایجاد شد</string>
+    <string name="error_creating_coupon">خطا در ایجاد کوپن</string>
+    <string name="coupon_updated_successfully">کوپن با موفقیت بروزرسانی شد</string>
+    <string name="error_updating_coupon">خطا در بروزرسانی کوپن</string>
+    <string name="coupon_deleted_successfully">کوپن با موفقیت حذف شد</string>
+    <string name="error_deleting_coupon">خطا در حذف کوپن</string>
+    <string name="error_fetching_coupon_details">خطا در دریافت جزئیات کوپن</string>
+
+    <string name="loading">در حال بارگذاری...</string>
+    <string name="unknown_error">خطای ناشناخته‌ای رخ داد.</string>
+
+
+
+
+
+    <string name="order_id_format">شناسه سفارش: %d</string>
+    <string name="order_status_format">وضعیت: %s</string>
+    <string name="order_price_format">قیمت: %d</string>
+    <string name="transaction_id_format">شناسه تراکنش: %d</string>
+    <string name="transaction_amount_format">مبلغ: %.2f</string>
+    <string name="transaction_status_format">وضعیت: %s</string>
+    <string name="order_clicked_message">سفارش %d کلیک شد</string>
+    <string name="transaction_clicked_message">تراکنش %d کلیک شد</string>
+    <string name="error_navigation_profile">خطا در هدایت به پروفایل</string>
+
+    <string name="order_id_format_full">شناسه سفارش: %d</string>
+    <string name="order_status_format_full">وضعیت: %s</string>
+    <string name="order_price_format_full">قیمت: %.2f دلار</string>
+
+    <string name="transaction_id_format_full">شناسه تراکنش: %d</string>
+    <string name="transaction_amount_format_full">مبلغ: %.2f دلار</string>
+    <string name="transaction_status_format_full">وضعیت: %s</string>
+
+    <string name="coupon_code_format">کد: %s</string>
+    <string name="coupon_type_format">نوع: %s</string>
+    <string name="coupon_value_format">مقدار: %s</string>
+    <string name="coupon_dates_format">معتبر: %s - %s</string>
+    <string name="edit_button_text">ویرایش</string>
+    <string name="delete_button_text">حذف</string>
+
+
+    <string name="view_my_profile">مشاهده پروفایل من</string>
+    <string name="add_new_coupon">افزودن کوپن جدید</string>
+    <string name="coupon_clicked_message">کوپن %s کلیک شد</string>
+
+
+    <string name="status_approved">تأیید شده</string>
+    <string name="status_rejected">رد شده</string>
+    <string name="status_pending">در انتظار</string>
+    <string name="status_unknown">نامشخص</string>
+
+    <string name="coupon_edit_clicked">ویرایش کوپن %s کلیک شد</string>
+    <string name="coupon_delete_confirm">تأیید حذف کوپن با شناسه: %d</string>
+    <string name="add_new_coupon_clicked">دکمه افزودن کوپن جدید کلیک شد</string>
+    <string name="coupon_details_loaded">جزئیات کوپن %s بارگذاری شد</string>
+
+
+    <string name="create_new_coupon_title">ایجاد کوپن جدید</string>
+    <string name="coupon_code_hint">کد کوپن (مثلاً BLACKFRIDAY)</string>
+    <string name="coupon_type_label">نوع کوپن</string>
+    <string name="coupon_value_hint">مقدار (مثلاً 10.00 یا 15)</string>
+    <string name="coupon_min_price_hint">حداقل قیمت برای تخفیف</string>
+    <string name="coupon_user_count_hint">حداکثر دفعات استفاده برای هر کاربر</string>
+    <string name="coupon_start_date_hint">تاریخ شروع (YYYY-MM-DD)</string>
+    <string name="coupon_end_date_hint">تاریخ پایان (YYYY-MM-DD)</string>
+    <string name="cancel_button">لغو</string>
+    <string name="create_coupon_button">ایجاد کوپن</string>
+    <string name="error_fill_all_fields">لطفاً تمام فیلدها را پر کنید.</string>
+    <string name="error_invalid_date_format">فرمت تاریخ نامعتبر است. از YYYY-MM-DD استفاده کنید.</string>
+    <string name="return_to_dashboard_page">بازگشت</string>
+
+    <string name="edit_coupon_title">ویرایش کوپن</string>
+    <string name="save_changes_button">ذخیره تغییرات</string>
+    <string name="delete_coupon_dialog_title">حذف کوپن</string>
+    <string name="delete_coupon_dialog_message">آیا از حذف کوپن با شناسه %d مطمئن هستید؟</string>
+    <string name="delete_button">حذف</string>
 
     <string name="menu_title">آیتم‌های منو</string>
 

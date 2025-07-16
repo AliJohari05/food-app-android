@@ -1,33 +1,40 @@
-// FoodApp/app/src/main/java/com/alijt/foodapp/repository/MenuRepository.kt
 package com.alijt.foodapp.repository
 
 import com.alijt.foodapp.model.ErrorResponse
 import com.alijt.foodapp.model.RestaurantMenuDetailsResponse
 import com.alijt.foodapp.network.ApiService
-import com.alijt.foodapp.network.RetrofitClient
+import com.alijt.foodapp.model.Result
 import com.google.gson.Gson
 import retrofit2.Response
 
 class MenuRepository(private val apiService: ApiService) {
 
-    suspend fun getRestaurantMenuDetails(token: String, restaurantId: Int): Result<RestaurantMenuDetailsResponse> {
+    private suspend fun <T> safeApiCall(call: suspend () -> Response<T>, defaultErrorMessage: String): Result<T> {
         return try {
-            val response = apiService.getVendorMenuDetails(token, restaurantId)
+            val response = call()
             if (response.isSuccessful) {
                 response.body()?.let {
-                    Result.success(it)
-                } ?: Result.failure(Exception("Empty menu details response body"))
+                    Result.Success(it) // استفاده صحیح از Result.Success
+                } ?: Result.Failure(Exception("Empty response body for successful call: $defaultErrorMessage")) // استفاده صحیح از Result.Failure
             } else {
                 val errorBody = response.errorBody()?.string()
                 val errorMessage = try {
                     Gson().fromJson(errorBody, ErrorResponse::class.java).error
                 } catch (e: Exception) {
-                    "Failed to fetch menu details: ${response.code()}"
+                    "$defaultErrorMessage (HTTP ${response.code()})"
                 }
-                Result.failure(Exception(errorMessage))
+                Result.Failure(Exception(errorMessage))
             }
         } catch (e: Exception) {
-            Result.failure(e)
+            e.printStackTrace()
+            Result.Failure(e)
         }
+    }
+
+    suspend fun getRestaurantMenuDetails(token: String, restaurantId: Int): Result<RestaurantMenuDetailsResponse> {
+        return safeApiCall(
+            call = { apiService.getVendorMenuDetails("Bearer $token", restaurantId.toString()) }, // restaurantId.toString() اضافه شد
+            defaultErrorMessage = "Failed to fetch menu details"
+        )
     }
 }

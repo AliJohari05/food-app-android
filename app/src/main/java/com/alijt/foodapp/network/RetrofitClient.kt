@@ -1,4 +1,3 @@
-// FoodApp/app/src/main/java/com/alijt/foodapp/network/RetrofitClient.kt
 package com.alijt.foodapp.network
 
 import android.content.Context // Import Context

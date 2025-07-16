@@ -60,7 +60,7 @@ class AuthRepository {
 
     suspend fun fetchUserProfile(token: String): Result<User> {
         return try {
-            val response = apiService.getUserProfile(token)
+            val response = apiService.fetchUserProfile(token)
             if (response.isSuccessful) {
                 response.body()?.let {
                     Result.success(it)

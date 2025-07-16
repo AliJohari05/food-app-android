@@ -12,8 +12,10 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider // Import ViewModelProvider
-import com.alijt.foodapp.R // Import R
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController // اضافه شد
+
+import com.alijt.foodapp.R
 import com.alijt.foodapp.databinding.FragmentProfileBinding
 import com.alijt.foodapp.model.ProfileUpdateRequest
 import com.alijt.foodapp.model.User
@@ -34,13 +36,12 @@ class ProfileFragment : Fragment() {
     private var selectedImageUri: Uri? = null
     private var profileImageBase64String: String? = null
 
-    // ActivityResultLauncher for picking image from gallery
     private val pickImageLauncher: ActivityResultLauncher<String> =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
                 selectedImageUri = it
-                binding.ivProfilePicture.setImageURI(it) // Display selected image
-                convertImageToBase64(it) // Convert to Base64
+                binding.ivProfilePicture.setImageURI(it)
+                convertImageToBase64(it)
             }
         }
 
@@ -55,13 +56,11 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Initialize SessionManager and AuthViewModel
         sessionManager = SessionManager(requireContext())
         val repository = AuthRepository()
         authViewModel = ViewModelProvider(this, AuthViewModelFactory(repository, sessionManager))
             .get(AuthViewModel::class.java)
 
-        // --- Fetch User Profile Data ---
         authViewModel.fetchUserProfile()
 
         authViewModel.userProfile.observe(viewLifecycleOwner) { result ->
@@ -72,25 +71,25 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        // --- Handle Image Selection ---
         binding.btnSelectImage.setOnClickListener {
-            pickImageLauncher.launch("image/*") // Launch gallery to pick an image
+            pickImageLauncher.launch("image/*")
         }
 
-        // --- Handle Save Changes Button Click ---
         binding.btnSaveChanges.setOnClickListener {
             saveProfileChanges()
         }
 
-        // --- Observe Profile Update Result ---
         authViewModel.profileUpdateResult.observe(viewLifecycleOwner) { result ->
             result.onSuccess { messageResponse ->
                 Toast.makeText(requireContext(), getString(R.string.profile_updated_successfully), Toast.LENGTH_SHORT).show()
-                // Optionally re-fetch profile to ensure UI is up-to-date
                 authViewModel.fetchUserProfile()
             }.onFailure { exception ->
                 Toast.makeText(requireContext(), getString(R.string.failed_to_update_profile), Toast.LENGTH_LONG).show()
             }
+        }
+
+        binding.btnBackProfile.setOnClickListener {
+            findNavController().navigateUp()
         }
     }
 
@@ -105,13 +104,7 @@ class ProfileFragment : Fragment() {
             binding.etAccountNumberProfile.setText(bankInfo.account_number)
         }
 
-        // Load profile image if URL is available (using a library like Glide/Picasso is recommended)
         user.profileImageUrl?.let { imageUrl ->
-            // TODO: Use an image loading library (e.g., Glide, Picasso) to load image from URL
-            // For now, if profileImageBase64 is available, display it
-            // val decodedImage = Base64.decode(user.profileImageBase64, Base64.DEFAULT)
-            // val bitmap = BitmapFactory.decodeByteArray(decodedImage, 0, decodedImage.size)
-            // binding.ivProfilePicture.setImageBitmap(bitmap)
         }
     }
 
@@ -123,7 +116,6 @@ class ProfileFragment : Fragment() {
         val bankName = binding.etBankNameProfile.text.toString().trim()
         val accountNumber = binding.etAccountNumberProfile.text.toString().trim()
 
-        // Basic validation (can be expanded)
         if (fullName.isEmpty() || phone.isEmpty() || address.isEmpty()) {
             Toast.makeText(requireContext(), getString(R.string.fill_all_required_fields), Toast.LENGTH_SHORT).show()
             return
@@ -142,9 +134,9 @@ class ProfileFragment : Fragment() {
         val updateRequest = ProfileUpdateRequest(
             fullName = fullName,
             phone = phone,
-            email = if (email.isEmpty()) null else email, // Send null if empty
+            email = if (email.isEmpty()) null else email,
             address = address,
-            profileImageBase64 = profileImageBase64String, // Use the Base64 string from image selection
+            profileImageBase64 = profileImageBase64String,
             bank_info = bankInfo
         )
 

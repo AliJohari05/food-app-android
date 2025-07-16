@@ -16,6 +16,8 @@ import com.alijt.foodapp.databinding.FragmentRestaurantDetailBinding
 import com.alijt.foodapp.model.FoodItem
 import com.alijt.foodapp.model.Restaurant
 import com.alijt.foodapp.model.RestaurantMenuDetailsResponse
+import com.alijt.foodapp.model.onFailure
+import com.alijt.foodapp.model.onSuccess
 import com.alijt.foodapp.repository.MenuRepository
 import com.alijt.foodapp.network.ApiService
 import com.alijt.foodapp.network.RetrofitClient

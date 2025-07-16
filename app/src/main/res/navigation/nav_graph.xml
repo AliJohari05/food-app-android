@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/adminDashboardFragment"> <fragment
+    android:id="@+id/adminDashboardFragment"
+    android:name="com.alijt.foodapp.view.dashboard.AdminDashboardFragment"
+    android:label="@string/admin_dashboard_title"
+    tools:layout="@layout/fragment_admin_dashboard">
+    <action
+        android:id="@+id/action_adminDashboardFragment_to_profileFragment"
+        app:destination="@id/profileFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+</fragment>
+
+    <fragment
+        android:id="@+id/buyerDashboardFragment"
+        android:name="com.alijt.foodapp.view.dashboard.BuyerDashboardFragment"
+        android:label="@string/buyer_dashboard_title"
+        tools:layout="@layout/fragment_buyer_dashboard" />
+
+    <fragment
+        android:id="@+id/sellerDashboardFragment"
+        android:name="com.alijt.foodapp.view.dashboard.SellerDashboardFragment"
+        android:label="@string/seller_dashboard_title"
+        tools:layout="@layout/fragment_seller_dashboard" />
+
+    <fragment
+        android:id="@+id/courierDashboardFragment"
+        android:name="com.alijt.foodapp.view.dashboard.CourierDashboardFragment"
+        android:label="@string/courier_dashboard_title"
+        tools:layout="@layout/fragment_courier_dashboard" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.alijt.foodapp.view.ProfileFragment"
+        android:label="@string/profile_title"
+        tools:layout="@layout/fragment_profile">
+    </fragment>
+
+</navigation>

@@ -59,18 +59,114 @@
     <string name="no_menu_items_found">No menu items found for this restaurant.</string>
     <string name="failed_to_load_menu">Failed to load menu.</string>
 
-        <string name="admin_dashboard_users_title">All Users</string>
-        <string name="user_id_format">ID: %s</string>
-        <string name="user_role_format">Role: %s</string>
-        <string name="user_status_format">Status: %s</string>
-        <string name="action_approve">Approve</string>
-        <string name="action_reject">Reject</string>
-        <string name="user_status_updated">User status updated successfully!</string>
-        <string name="failed_to_update_user_status">Failed to update user status.</string>
-        <string name="failed_to_load_users">Failed to load users.</string>
-        <string name="no_users_found">No users found.</string>
+    <string name="admin_dashboard_users_title">All Users</string>
+    <string name="user_id_format">ID: %s</string>
+    <string name="user_role_format">Role: %s</string>
+    <string name="user_status_format">Status: %s</string>
+    <string name="action_approve">Approve</string>
+    <string name="action_reject">Reject</string>
+    <string name="user_status_updated">User status updated successfully!</string>
+    <string name="failed_to_update_user_status">Failed to update user status.</string>
+    <string name="failed_to_load_users">Failed to load users.</string>
+    <string name="no_users_found">No users found.</string>
 
+
+
+    <string name="users_tab_title">Users</string>
+    <string name="orders_tab_title">Orders</string>
+    <string name="transactions_tab_title">Transactions</string>
+    <string name="coupons_tab_title">Coupons</string>
+
+    <string name="approve_button_text">Approve</string>
+    <string name="reject_button_text">Reject</string>
+    <string name="user_phone_format">Phone: %s</string>
+
+    <string name="error_fetching_users">Error fetching users</string>
+    <string name="user_status_updated_successfully">User status updated successfully</string>
+    <string name="error_updating_user_status">Error updating user status</string>
+    <string name="authentication_token_not_found">Authentication token not found.</string>
+
+    <string name="error_fetching_orders">Error fetching orders</string>
+    <string name="error_fetching_transactions">Error fetching transactions</string>
+    <string name="error_fetching_coupons">Error fetching coupons</string>
+
+    <string name="coupon_created_successfully">Coupon created successfully</string>
+    <string name="error_creating_coupon">Error creating coupon</string>
+    <string name="coupon_updated_successfully">Coupon updated successfully</string>
+    <string name="error_updating_coupon">Error updating coupon</string>
+    <string name="coupon_deleted_successfully">Coupon deleted successfully</string>
+    <string name="error_deleting_coupon">Error deleting coupon</string>
+    <string name="error_fetching_coupon_details">Error fetching coupon details</string>
+
+    <string name="loading">Loading...</string>
+    <string name="unknown_error">An unknown error occurred.</string>
     <string name="menu_title">Menu Items</string>
+
+
+
+    <string name="order_id_format">Order ID: %d</string>
+    <string name="order_status_format">Status: %s</string>
+    <string name="order_price_format">Price: %d</string>
+    <string name="transaction_id_format">Transaction ID: %d</string>
+    <string name="transaction_amount_format">Amount: %.2f</string>
+    <string name="transaction_status_format">Status: %s</string>
+    <string name="order_clicked_message">Order %d clicked</string>
+    <string name="transaction_clicked_message">Transaction %d clicked</string>
+    <string name="error_navigation_profile">Error navigating to profile</string>
+
+
+
+
+    <string name="order_id_format_full">Order ID: %d</string>
+    <string name="order_status_format_full">Status: %s</string>
+    <string name="order_price_format_full">Price: $%.2f</string>
+
+    <string name="transaction_id_format_full">Transaction ID: %d</string>
+    <string name="transaction_amount_format_full">Amount: $%.2f</string>
+    <string name="transaction_status_format_full">Status: %s</string>
+
+    <string name="coupon_code_format">Code: %s</string>
+    <string name="coupon_type_format">Type: %s</string>
+    <string name="coupon_value_format">Value: %s</string>
+    <string name="coupon_dates_format">Valid: %s - %s</string>
+    <string name="edit_button_text">Edit</string>
+    <string name="delete_button_text">Delete</string>
+
+    <string name="view_my_profile">View My Profile</string>
+    <string name="add_new_coupon">Add New Coupon</string>
+    <string name="coupon_clicked_message">Coupon %s clicked</string>
+
+
+    <string name="status_approved">Approved</string>
+    <string name="status_rejected">Rejected</string>
+    <string name="status_pending">Pending</string>
+    <string name="status_unknown">Unknown</string>
+
+    <string name="coupon_edit_clicked">Edit coupon %s clicked</string>
+    <string name="coupon_delete_confirm">Confirm delete coupon ID: %d</string>
+    <string name="add_new_coupon_clicked">Add new coupon button clicked</string>
+    <string name="coupon_details_loaded">Coupon %s details loaded</string>
+
+
+    <string name="create_new_coupon_title">Create New Coupon</string>
+    <string name="coupon_code_hint">Coupon Code (e.g., BLACKFRIDAY)</string>
+    <string name="coupon_type_label">Coupon Type</string>
+    <string name="coupon_value_hint">Value (e.g., 10.00 or 15)</string>
+    <string name="coupon_min_price_hint">Minimum Price for Discount</string>
+    <string name="coupon_user_count_hint">Max Usage Count per User</string>
+    <string name="coupon_start_date_hint">Start Date (YYYY-MM-DD)</string>
+    <string name="coupon_end_date_hint">End Date (YYYY-MM-DD)</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="create_coupon_button">Create Coupon</string>
+    <string name="error_fill_all_fields">Please fill all fields.</string>
+    <string name="error_invalid_date_format">Invalid date format. Use YYYY-MM-DD.</string>
+    <string name="return_to_dashboard_page">Back</string>
+
+    <string name="edit_coupon_title">Edit Coupon</string>
+    <string name="save_changes_button">Save Changes</string>
+    <string name="delete_coupon_dialog_title">Delete Coupon</string>
+    <string name="delete_coupon_dialog_message">Are you sure you want to delete coupon ID %d?</string>
+    <string name="delete_button">Delete</string>
 
     <string-array name="user_roles">
         <item>Buyer</item>
