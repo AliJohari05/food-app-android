@@ -11,27 +11,17 @@ class AdminRepository(private val apiService: ApiService) {
         return try {
             val response = call()
             if (response.isSuccessful) {
-                // اگر پاسخ موفق بود و بدنه وجود داشت، آن را به عنوان Result.Success برگردانید
-                // این برای بیشتر پاسخ‌های JSON است.
                 response.body()?.let {
                     Result.Success(it)
-                }
-                // اگر پاسخ موفق بود اما بدنه نداشت (مثل 204 No Content)،
-                // یا اگر نوع بازگشتی String بود (مثل "Status updated")
-                // و T از نوع MessageResponse بود، یک MessageResponse ساختگی ایجاد می‌کنیم.
-                    ?: run {
-                        if (MessageResponse::class.java == T::class.java) { // بررسی می‌کند آیا نوع هدف MessageResponse است
-                            // اگر بدنه خالی بود، یا یک رشته ساده (که توسط Retrofit به String تبدیل شده)،
-                            // آن را به عنوان پیام استفاده می‌کنیم.
-                            val messageString = response.raw().request.tag(kotlin.String::class.java) // try to get the original string if possible (complex)
-                                ?: response.errorBody()?.string() // Fallback to error body if response.body() is null
-                                ?: "Operation successful" // Fallback to a default message
-                            @Suppress("UNCHECKED_CAST")
-                            Result.Success(MessageResponse(message = messageString)) as Result<T>
-                        } else {
-                            Result.Failure(Exception("Empty response body for successful call: $defaultErrorMessage"))
-                        }
+                } ?: run {
+                    if (MessageResponse::class.java == T::class.java) {
+                        val messageString = response.errorBody()?.string() ?: "Operation successful"
+                        @Suppress("UNCHECKED_CAST")
+                        Result.Success(MessageResponse(message = messageString)) as Result<T>
+                    } else {
+                        Result.Failure(Exception("Empty response body for successful call: $defaultErrorMessage"))
                     }
+                }
             } else {
                 val errorBody = response.errorBody()?.string()
                 val errorMessage = try {
@@ -54,7 +44,6 @@ class AdminRepository(private val apiService: ApiService) {
         )
     }
 
-    // متد updateUserStatus اصلاح شد تا String را از ApiService دریافت کند
     suspend fun updateUserStatus(token: String, userId: String, request: UserStatusUpdateRequest): Result<String> {
         return safeApiCall(
             call = { apiService.updateUserStatus(userId, request, "Bearer $token") },
@@ -117,7 +106,6 @@ class AdminRepository(private val apiService: ApiService) {
         )
     }
 
-    // متد deleteCoupon اصلاح شد تا String را از ApiService دریافت کند
     suspend fun deleteCoupon(token: String, couponId: String): Result<String> {
         return safeApiCall(
             call = { apiService.deleteCoupon(couponId, "Bearer $token") },

@@ -22,7 +22,7 @@ class DashboardActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDashboardBinding
     private lateinit var sessionManager: SessionManager
-    private lateinit var navController: NavController // NavController را تعریف می‌کنیم
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,35 +31,34 @@ class DashboardActivity : AppCompatActivity() {
 
         sessionManager = SessionManager(this)
 
-        // NavHostFragment را از fragment_container پیدا کنید
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
-        navController = navHostFragment.navController // NavController را مقداردهی می‌کنیم
+        navController = navHostFragment.navController
 
         // Dynamically set the start destination based on user role
         val navInflater: NavInflater = navController.navInflater
-        val graph: NavGraph = navInflater.inflate(R.navigation.nav_graph) // گرافی که در nav_graph.xml تعریف کرده‌اید را بارگذاری کنید
+        val graph: NavGraph = navInflater.inflate(R.navigation.nav_graph)
 
         val userRole = sessionManager.getUserRole()
         userRole?.let { role ->
             val welcomeMessageResId: Int
-            val startDestinationId: Int // ID مقصد شروع اولیه بر اساس نقش کاربر
+            val startDestinationId: Int
 
             when (role.uppercase()) {
                 "BUYER" -> {
                     welcomeMessageResId = R.string.welcome_message_buyer
-                    startDestinationId = R.id.buyerDashboardFragment // این ID باید در nav_graph.xml تعریف شده باشد
+                    startDestinationId = R.id.buyerDashboardFragment
                 }
                 "SELLER" -> {
                     welcomeMessageResId = R.string.welcome_message_seller
-                    startDestinationId = R.id.sellerDashboardFragment // این ID باید در nav_graph.xml تعریف شده باشد
+                    startDestinationId = R.id.sellerDashboardFragment
                 }
                 "COURIER" -> {
                     welcomeMessageResId = R.string.welcome_message_courier
-                    startDestinationId = R.id.courierDashboardFragment // این ID باید در nav_graph.xml تعریف شده باشد
+                    startDestinationId = R.id.courierDashboardFragment
                 }
                 "ADMIN" -> {
                     welcomeMessageResId = R.string.welcome_message_admin
-                    startDestinationId = R.id.adminDashboardFragment // این ID باید در nav_graph.xml تعریف شده باشد
+                    startDestinationId = R.id.adminDashboardFragment
                 }
                 else -> {
                     Toast.makeText(this, getString(R.string.unknown_role_message), Toast.LENGTH_LONG).show()
@@ -70,8 +69,8 @@ class DashboardActivity : AppCompatActivity() {
                 }
             }
 
-            graph.setStartDestination(startDestinationId) // مقصد شروع را به صورت پویا تنظیم کنید
-            navController.graph = graph // گراف اصلاح شده را به NavController اختصاص دهید
+            graph.setStartDestination(startDestinationId)
+            navController.graph = graph
 
             Toast.makeText(this, getString(welcomeMessageResId), Toast.LENGTH_LONG).show()
             binding.tvDashboardHeader.text = getString(welcomeMessageResId)

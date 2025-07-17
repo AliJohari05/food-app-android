@@ -28,22 +28,22 @@ class AdminViewModel(
     val couponsList: LiveData<Result<List<Coupon>>> = _couponsList
 
     private val _userStatusUpdateResult = SingleLiveEvent<Result<String>>()
-    val userStatusUpdateResult: LiveData<Result<String>> = _userStatusUpdateResult 
+    val userStatusUpdateResult: LiveData<Result<String>> = _userStatusUpdateResult
 
-    private val _couponCreateResult = SingleLiveEvent<Result<Coupon>>() // <-- تغییر
-    val couponCreateResult: LiveData<Result<Coupon>> = _couponCreateResult // <-- تغییر
+    private val _couponCreateResult = SingleLiveEvent<Result<Coupon>>()
+    val couponCreateResult: LiveData<Result<Coupon>> = _couponCreateResult
 
-    private val _couponUpdateResult = SingleLiveEvent<Result<Coupon>>() // <-- تغییر
-    val couponUpdateResult: LiveData<Result<Coupon>> = _couponUpdateResult // <-- تغییر
+    private val _couponUpdateResult = SingleLiveEvent<Result<Coupon>>()
+    val couponUpdateResult: LiveData<Result<Coupon>> = _couponUpdateResult
 
-    private val _couponDeleteResult = SingleLiveEvent<Result<String>>() // <-- تغییر
-    val couponDeleteResult: LiveData<Result<String>> = _couponDeleteResult // <-- تغییر
+    private val _couponDeleteResult = SingleLiveEvent<Result<String>>()
+    val couponDeleteResult: LiveData<Result<String>> = _couponDeleteResult
 
-    private val _couponDetails = SingleLiveEvent<Result<Coupon>>() // <-- تغییر
-    val couponDetails: LiveData<Result<Coupon>> = _couponDetails // <-- تغییر
+    private val _couponDetails = SingleLiveEvent<Result<Coupon>>()
+    val couponDetails: LiveData<Result<Coupon>> = _couponDetails
 
     fun fetchAllUsers() {
-        _usersList.value = Result.Loading
+        _usersList.value = Result.Loading(null) // <-- اصلاح شد
         viewModelScope.launch {
             val token = sessionManager.getAuthToken()
             if (token != null) {
@@ -55,7 +55,7 @@ class AdminViewModel(
     }
 
     fun updateUserStatus(userId: String, status: String) {
-        _userStatusUpdateResult.value = Result.Loading
+        _userStatusUpdateResult.value = Result.Loading(null) // <-- اصلاح شد
         viewModelScope.launch {
             val token = sessionManager.getAuthToken()
             if (token != null) {
@@ -68,7 +68,7 @@ class AdminViewModel(
     }
 
     fun fetchAllOrders(status: String? = null, search: String? = null, vendor: String? = null, courier: String? = null, customer: String? = null) {
-        _ordersList.value = Result.Loading
+        _ordersList.value = Result.Loading(null) // <-- اصلاح شد
         viewModelScope.launch {
             val token = sessionManager.getAuthToken()
             if (token != null) {
@@ -80,7 +80,7 @@ class AdminViewModel(
     }
 
     fun fetchAllTransactions(search: String? = null, user: String? = null, method: String? = null, status: String? = null) {
-        _transactionsList.value = Result.Loading
+        _transactionsList.value = Result.Loading(null) // <-- اصلاح شد
         viewModelScope.launch {
             val token = sessionManager.getAuthToken()
             if (token != null) {
@@ -92,7 +92,7 @@ class AdminViewModel(
     }
 
     fun fetchAllCoupons() {
-        _couponsList.value = Result.Loading
+        _couponsList.value = Result.Loading(null) // <-- اصلاح شد
         viewModelScope.launch {
             val token = sessionManager.getAuthToken()
             if (token != null) {
@@ -104,7 +104,7 @@ class AdminViewModel(
     }
 
     fun createCoupon(request: CreateCouponRequest) {
-        _couponCreateResult.value = Result.Loading
+        _couponCreateResult.value = Result.Loading(null) // <-- اصلاح شد
         viewModelScope.launch {
             val token = sessionManager.getAuthToken()
             if (token != null) {
@@ -119,7 +119,7 @@ class AdminViewModel(
     }
 
     fun getCouponDetails(couponId: String) {
-        _couponDetails.value = Result.Loading
+        _couponDetails.value = Result.Loading(null) // <-- اصلاح شد
         viewModelScope.launch {
             val token = sessionManager.getAuthToken()
             if (token != null) {
@@ -131,7 +131,7 @@ class AdminViewModel(
     }
 
     fun updateCoupon(couponId: String, request: UpdateCouponRequest) {
-        _couponUpdateResult.value = Result.Loading
+        _couponUpdateResult.value = Result.Loading(null) // <-- اصلاح شد
         viewModelScope.launch {
             val token = sessionManager.getAuthToken()
             if (token != null) {
@@ -146,7 +146,7 @@ class AdminViewModel(
     }
 
     fun deleteCoupon(couponId: String) {
-        _couponDeleteResult.value = Result.Loading
+        _couponDeleteResult.value = Result.Loading(null) // <-- اصلاح شد
         viewModelScope.launch {
             val token = sessionManager.getAuthToken()
             if (token != null) {

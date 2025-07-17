@@ -14,14 +14,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.alijt.foodapp.R
 import com.alijt.foodapp.adapter.RestaurantAdapter
 import com.alijt.foodapp.databinding.FragmentBuyerDashboardBinding
-import com.alijt.foodapp.model.Restaurant // Import Restaurant
+import com.alijt.foodapp.model.Restaurant
 import com.alijt.foodapp.model.VendorListRequest
+import com.alijt.foodapp.model.Result
 import com.alijt.foodapp.repository.RestaurantRepository
 import com.alijt.foodapp.utils.SessionManager
 import com.alijt.foodapp.view.ProfileFragment
-import com.alijt.foodapp.view.RestaurantDetailFragment // Import RestaurantDetailFragment
+import com.alijt.foodapp.view.RestaurantDetailFragment
 import com.alijt.foodapp.viewmodel.RestaurantViewModel
 import com.alijt.foodapp.viewmodel.RestaurantViewModelFactory
+import com.alijt.foodapp.network.RetrofitClient // اضافه شد
+import com.alijt.foodapp.network.ApiService // اضافه شد
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -51,32 +54,38 @@ class BuyerDashboardFragment : Fragment() {
 
         sessionManager = SessionManager(requireContext())
 
-        val repository = RestaurantRepository()
+        // اصلاح شد: apiService و sessionManager به سازنده RestaurantRepository ارسال شدند
+        val apiService = RetrofitClient.instance
+        val repository = RestaurantRepository(apiService, sessionManager) // <-- اینجا اصلاح شد
         restaurantViewModel = ViewModelProvider(this, RestaurantViewModelFactory(repository, sessionManager))
             .get(RestaurantViewModel::class.java)
 
-        // Setup RecyclerView, passing the click listener
         setupRecyclerView()
 
         fetchRestaurants("")
 
         restaurantViewModel.restaurants.observe(viewLifecycleOwner) { result ->
-            result.onSuccess { restaurants ->
-                if (restaurants.isEmpty()) {
-                    Toast.makeText(requireContext(), getString(R.string.no_restaurants_found), Toast.LENGTH_SHORT).show()
+            if (result is Result.Loading) {
+                // نمایش لودینگ
+            } else if (result is Result.Success<*>) {
+                val data = result.data
+                if (data is List<*>) {
+                    val restaurantList = data as List<Restaurant>
+                    if (restaurantList.isEmpty()) {
+                        Toast.makeText(requireContext(), getString(R.string.no_restaurants_found), Toast.LENGTH_SHORT).show()
+                    } else {
+                        restaurantAdapter.submitList(restaurantList)
+                    }
                 } else {
-                    restaurantAdapter.submitList(restaurants)
+                    Toast.makeText(requireContext(), getString(R.string.error_unexpected_data_format), Toast.LENGTH_LONG).show()
                 }
-            }.onFailure { exception ->
-                Toast.makeText(requireContext(), getString(R.string.failed_to_load_restaurants) + ": ${exception.message}", Toast.LENGTH_LONG).show()
+            } else if (result is Result.Failure) {
+                Toast.makeText(requireContext(), getString(R.string.failed_to_load_restaurants) + ": ${result.exception.message}", Toast.LENGTH_LONG).show()
             }
         }
 
         binding.btnViewProfile.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, ProfileFragment())
-                .addToBackStack(null)
-                .commit()
+            Toast.makeText(requireContext(), "Navigation to profile not implemented via NavComponent yet in BuyerDashboard", Toast.LENGTH_SHORT).show()
         }
 
         binding.etSearchRestaurant.addTextChangedListener(object : TextWatcher {
@@ -98,22 +107,28 @@ class BuyerDashboardFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        // Pass the click listener lambda to the adapter
-        restaurantAdapter = RestaurantAdapter { restaurant ->
-            // Handle restaurant item click: navigate to RestaurantDetailFragment
-            val bundle = Bundle().apply {
-                putInt("restaurant_id", restaurant.id) // Pass restaurant ID
-                // You can also pass restaurant name, etc. if needed
-            }
-            val restaurantDetailFragment = RestaurantDetailFragment().apply {
-                arguments = bundle
-            }
+        restaurantAdapter = RestaurantAdapter(
+            onItemClick = { restaurant ->
+                restaurant.id?.let { restaurantId ->
+                    val bundle = Bundle().apply {
+                        putInt("restaurant_id", restaurantId)
+                    }
+                    val restaurantDetailFragment = RestaurantDetailFragment().apply {
+                        arguments = bundle
+                    }
 
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, restaurantDetailFragment)
-                .addToBackStack(null) // Allows going back to BuyerDashboardFragment
-                .commit()
-        }
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, restaurantDetailFragment)
+                        .addToBackStack(null)
+                        .commit()
+                } ?: run {
+                    Toast.makeText(requireContext(), getString(R.string.error_invalid_restaurant_id_for_details), Toast.LENGTH_SHORT).show()
+                }
+            },
+            onEditClick = { restaurant ->
+                Toast.makeText(requireContext(), getString(R.string.buyer_no_edit_option), Toast.LENGTH_SHORT).show()
+            }
+        )
         binding.rvRestaurants.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = restaurantAdapter
