@@ -168,6 +168,52 @@
     <string name="delete_coupon_dialog_message">Are you sure you want to delete coupon ID %d?</string>
     <string name="delete_button">Delete</string>
 
+    <string name="my_restaurants_tab_title">My Restaurants</string>
+    <string name="seller_orders_tab_title">Orders</string>
+    <string name="seller_menus_tab_title">Menus</string>
+    <string name="seller_coupons_tab_title">Coupons</string>
+
+    <string name="restaurant_clicked">Restaurant %s clicked</string>
+    <string name="add_new_restaurant">Add New Restaurant</string>
+    <string name="add_new_restaurant_clicked">Add new restaurant button clicked</string>
+    <string name="error_fetching_restaurants">Error fetching restaurants</string>
+    <string name="operation_successful">Operation successful</string>
+    <string name="operation_failed">Operation failed</string>
+
+    <string name="add_new_menu_or_item">Add New Menu or Item</string>
+    <string name="error_fetching_menus">Error fetching menus</string>
+    <string name="delete_coupon_confirm_message">Deleting coupon ID %d. This action is not implemented yet in ViewModel.</string>
+
+    <string name="create_new_restaurant_title">Create New Restaurant</string>
+    <string name="restaurant_name_hint">Restaurant Name</string>
+    <string name="restaurant_address_hint">Restaurant Address</string>
+    <string name="restaurant_phone_hint">Restaurant Phone</string>
+    <string name="restaurant_logo_base64_hint">Restaurant Logo (Base64)</string>
+    <string name="restaurant_tax_fee_hint">Tax Fee (%)</string>
+    <string name="restaurant_additional_fee_hint">Additional Fee</string>
+    <string name="create_restaurant_button">Create Restaurant</string>
+    <string name="error_fill_all_required_restaurant_fields">Please fill all required restaurant fields.</string>
+    <string name="error_invalid_phone_format">Invalid phone format (min 10 digits).</string>
+    <string name="restaurant_created_successfully">Restaurant created successfully</string>
+    <string name="error_creating_restaurant">Error creating restaurant</string>
+
+    <string name="error_fill_required_restaurant_fields">Please fill required fields (Name, Address, Phone).</string>
+    <string name="error_negative_tax_fee">Tax fee cannot be negative.</string>
+    <string name="error_negative_additional_fee">Additional fee cannot be negative.</string>
+
+    <string name="error_unexpected_data_format">Error: Unexpected data format received.</string>
+
+
+    <string name="edit_restaurant_title">Edit Restaurant</string>
+    <string name="restaurant_updated_successfully">Restaurant updated successfully</string>
+    <string name="error_updating_restaurant">Error updating restaurant</string>
+    <string name="delete_restaurant_dialog_title">Delete Restaurant</string>
+    <string name="delete_restaurant_dialog_message">Are you sure you want to delete restaurant ID %d?</string>
+    <string name="edit_restaurant_clicked">Edit restaurant %s clicked</string>
+    <string name="restaurant_phone_format">Phone: %s</string>
+
+    <string name="error_invalid_restaurant_id_for_details">Error: Invalid restaurant ID for details.</string>
+
     <string-array name="user_roles">
         <item>Buyer</item>
         <item>Seller</item>
