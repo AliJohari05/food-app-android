@@ -215,11 +215,14 @@
     <string name="edit_restaurant_title">ویرایش رستوران</string>
     <string name="restaurant_updated_successfully">رستوران با موفقیت به‌روزرسانی شد</string>
     <string name="error_updating_restaurant">خطا در به‌روزرسانی رستوران</string>
-    <string name="delete_restaurant_dialog_title">حذف رستوران</string>
-    <string name="delete_restaurant_dialog_message">آیا از حذف رستوران با شناسه %d مطمئن هستید؟</string>
     <string name="edit_restaurant_clicked">ویرایش رستوران %s کلیک شد</string>
     <string name="restaurant_phone_format">تلفن: %s</string>
     <string name="menu_title">آیتم‌های منو</string>
+
+
+    <string name="buyer_no_edit_option">ویرایش برای خریداران امکان‌پذیر نیست.</string>
+    <string name="buyer_no_delete_option">حذف برای خریداران امکان‌پذیر نیست.</string>
+
 
     <string-array name="user_roles">
         <item>خریدار</item>

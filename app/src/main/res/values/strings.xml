@@ -207,10 +207,13 @@
     <string name="edit_restaurant_title">Edit Restaurant</string>
     <string name="restaurant_updated_successfully">Restaurant updated successfully</string>
     <string name="error_updating_restaurant">Error updating restaurant</string>
-    <string name="delete_restaurant_dialog_title">Delete Restaurant</string>
-    <string name="delete_restaurant_dialog_message">Are you sure you want to delete restaurant ID %d?</string>
     <string name="edit_restaurant_clicked">Edit restaurant %s clicked</string>
     <string name="restaurant_phone_format">Phone: %s</string>
+
+
+    <string name="buyer_no_edit_option">Editing is not available for buyers.</string>
+    <string name="buyer_no_delete_option">Deletion is not available for buyers.</string>
+
 
     <string name="error_invalid_restaurant_id_for_details">Error: Invalid restaurant ID for details.</string>
 

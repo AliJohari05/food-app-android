@@ -14,72 +14,49 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/ivRestaurantLogo"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_horizontal"
-            android:scaleType="centerCrop"
-            android:src="@android:drawable/ic_menu_gallery"
-            android:background="@android:color/darker_gray"
-            android:layout_marginBottom="8dp" />
-
         <TextView
             android:id="@+id/tvRestaurantName"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
             android:textStyle="bold"
-            android:gravity="center_horizontal"
-            tools:text="Restaurant Name"
-            android:layout_marginBottom="4dp" />
-
-        <TextView
-            android:id="@+id/tvRestaurantDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:gravity="center_horizontal"
-            android:maxLines="2"
-            android:ellipsize="end"
-            tools:text="A brief description of the restaurant and its specialties."
-            android:layout_marginBottom="4dp" />
+            android:textSize="18sp"
+            android:textColor="?android:attr/textColorPrimary"
+            tools:text="My Restaurant Name"/>
 
         <TextView
             android:id="@+id/tvRestaurantAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:gravity="center_horizontal"
-            tools:text="123 Main St, City, Country"
-            android:layout_marginBottom="4dp" />
-
-        <TextView
-            android:id="@+id/tvRestaurantRating"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:gravity="center_horizontal"
-            android:drawablePadding="4dp"
-            android:drawableLeft="@android:drawable/btn_star_big_on"
-            android:drawableStart="@android:drawable/btn_star_big_on"
-            tools:text="Rating: 4.5" />
-
-        <!-- Optional: Status (Open/Closed) -->
-        <TextView
-            android:id="@+id/tvRestaurantStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:background="@drawable/bgbuttonregister"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            tools:text="OPEN" />
+            android:layout_marginTop="4dp"
+            android:textSize="14sp"
+            android:textColor="?android:attr/textColorSecondary"
+            tools:text="Address: 123 Main St."/>
 
+        <TextView
+            android:id="@+id/tvRestaurantPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textSize="14sp"
+            android:textColor="?android:attr/textColorSecondary"
+            tools:text="Phone: 09123456789"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <Button
+                android:id="@+id/btnEditRestaurant"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/edit_button_text"
+                android:layout_marginEnd="4dp"
+                style="?attr/materialButtonOutlinedStyle"/>
+
+        </LinearLayout>
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>

@@ -9,13 +9,15 @@ import retrofit2.Response
 
 class MenuRepository(private val apiService: ApiService) {
 
-    private suspend fun <T> safeApiCall(call: suspend () -> Response<T>, defaultErrorMessage: String): Result<T> {
+    private suspend inline fun <reified T> safeApiCall(call: suspend () -> Response<T>, defaultErrorMessage: String): Result<T> {
         return try {
             val response = call()
             if (response.isSuccessful) {
                 response.body()?.let {
-                    Result.Success(it) // استفاده صحیح از Result.Success
-                } ?: Result.Failure(Exception("Empty response body for successful call: $defaultErrorMessage")) // استفاده صحیح از Result.Failure
+                    Result.Success(it)
+                } ?: run {
+                    Result.Failure(Exception("Empty response body for successful call: $defaultErrorMessage"))
+                }
             } else {
                 val errorBody = response.errorBody()?.string()
                 val errorMessage = try {
@@ -33,7 +35,7 @@ class MenuRepository(private val apiService: ApiService) {
 
     suspend fun getRestaurantMenuDetails(token: String, restaurantId: Int): Result<RestaurantMenuDetailsResponse> {
         return safeApiCall(
-            call = { apiService.getVendorMenuDetails("Bearer $token", restaurantId.toString()) }, // restaurantId.toString() اضافه شد
+            call = { apiService.getVendorMenuDetails("Bearer $token", restaurantId.toString()) },
             defaultErrorMessage = "Failed to fetch menu details"
         )
     }

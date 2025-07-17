@@ -1,22 +1,18 @@
 package com.alijt.foodapp.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.alijt.foodapp.R
 import com.alijt.foodapp.databinding.ItemRestaurantBinding
 import com.alijt.foodapp.model.Restaurant
-import com.bumptech.glide.Glide
 
-class RestaurantAdapter(private val clickListener: (Restaurant) -> Unit) : RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder>() {
-
-    private var restaurants: List<Restaurant> = emptyList()
-
-    fun submitList(newRestaurants: List<Restaurant>) {
-        restaurants = newRestaurants
-        notifyDataSetChanged()
-    }
+class RestaurantAdapter(
+    private val onItemClick: (Restaurant) -> Unit,
+    private val onEditClick: (Restaurant) -> Unit
+) : ListAdapter<Restaurant, RestaurantAdapter.RestaurantViewHolder>(RestaurantDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantViewHolder {
         val binding = ItemRestaurantBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,48 +20,30 @@ class RestaurantAdapter(private val clickListener: (Restaurant) -> Unit) : Recyc
     }
 
     override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
-        val restaurant = restaurants[position]
-        holder.bind(restaurant)
+        val restaurant = getItem(position)
+        holder.bind(restaurant, onItemClick, onEditClick) // onDeleteClick حذف شد
     }
 
-    override fun getItemCount(): Int = restaurants.size
-
-    inner class RestaurantViewHolder(private val binding: ItemRestaurantBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(restaurant: Restaurant) {
+    class RestaurantViewHolder(private val binding: ItemRestaurantBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(restaurant: Restaurant, onItemClick: (Restaurant) -> Unit, onEditClick: (Restaurant) -> Unit) { // onDeleteClick حذف شد
             binding.tvRestaurantName.text = restaurant.name
-            binding.tvRestaurantDescription.text = restaurant.description ?: ""
             binding.tvRestaurantAddress.text = restaurant.address
+            binding.tvRestaurantPhone.text = binding.root.context.getString(R.string.restaurant_phone_format, restaurant.phone)
 
-            restaurant.averageRating?.let { rating ->
-                binding.tvRestaurantRating.text = binding.root.context.getString(com.alijt.foodapp.R.string.rating_format, String.format("%.1f", rating))
-                binding.tvRestaurantRating.visibility = View.VISIBLE
-            } ?: run {
-                binding.tvRestaurantRating.visibility = View.GONE
-            }
+            binding.root.setOnClickListener { onItemClick(restaurant) }
 
-            val displayStatus = restaurant.status ?: "OPEN"
-            binding.tvRestaurantStatus.text = displayStatus
+            binding.btnEditRestaurant.setOnClickListener { onEditClick(restaurant) }
+        }
+    }
 
-            when (displayStatus.uppercase()) {
-                "OPEN" -> binding.tvRestaurantStatus.setBackgroundResource(android.R.color.holo_green_dark)
-                "CLOSED" -> binding.tvRestaurantStatus.setBackgroundResource(android.R.color.holo_red_dark)
-                "BUSY" -> binding.tvRestaurantStatus.setBackgroundResource(android.R.color.holo_orange_dark)
-                else -> binding.tvRestaurantStatus.setBackgroundResource(android.R.color.darker_gray)
-            }
+    private class RestaurantDiffCallback : DiffUtil.ItemCallback<Restaurant>() {
+        override fun areItemsTheSame(oldItem: Restaurant, newItem: Restaurant): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-            restaurant.profileImageUrl?.let { imageUrl ->
-                Glide.with(binding.ivRestaurantLogo.context)
-                    .load(imageUrl)
-                    .placeholder(android.R.drawable.ic_menu_gallery)
-                    .error(android.R.drawable.ic_menu_gallery)
-                    .into(binding.ivRestaurantLogo)
-            } ?: run {
-                binding.ivRestaurantLogo.setImageResource(android.R.drawable.ic_menu_gallery)
-            }
-
-            binding.root.setOnClickListener {
-                clickListener(restaurant)
-            }
+        override fun areContentsTheSame(oldItem: Restaurant, newItem: Restaurant): Boolean {
+            return oldItem == newItem
         }
     }
 }
