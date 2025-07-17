@@ -169,6 +169,56 @@
     <string name="delete_coupon_dialog_message">آیا از حذف کوپن با شناسه %d مطمئن هستید؟</string>
     <string name="delete_button">حذف</string>
 
+    <string name="my_restaurants_tab_title">رستوران‌های من</string>
+    <string name="seller_orders_tab_title">سفارشات</string>
+    <string name="seller_menus_tab_title">منوها</string>
+    <string name="seller_coupons_tab_title">کوپن‌ها</string>
+
+
+    <string name="restaurant_clicked">رستوران %s کلیک شد</string>
+    <string name="add_new_restaurant">افزودن رستوران جدید</string>
+    <string name="add_new_restaurant_clicked">دکمه افزودن رستوران جدید کلیک شد</string>
+    <string name="error_fetching_restaurants">خطا در دریافت رستوران‌ها</string>
+    <string name="operation_successful">عملیات با موفقیت انجام شد</string>
+    <string name="operation_failed">عملیات با شکست مواجه شد</string>
+
+    <string name="add_new_menu_or_item">افزودن منو یا آیتم جدید</string>
+    <string name="error_fetching_menus">خطا در دریافت منوها</string>
+    <string name="delete_coupon_confirm_message">کوپن با شناسه %d در حال حذف است. این عمل هنوز در ViewModel پیاده‌سازی نشده است.</string>
+
+    <string name="create_new_restaurant_title">ایجاد رستوران جدید</string>
+    <string name="restaurant_name_hint">نام رستوران</string>
+    <string name="restaurant_address_hint">آدرس رستوران</string>
+    <string name="restaurant_phone_hint">تلفن رستوران</string>
+    <string name="restaurant_logo_base64_hint">لوگوی رستوران (Base64)</string>
+    <string name="restaurant_tax_fee_hint">هزینه مالیات (%)</string>
+    <string name="restaurant_additional_fee_hint">هزینه اضافی</string>
+    <string name="create_restaurant_button">ایجاد رستوران</string>
+    <string name="error_fill_all_required_restaurant_fields">لطفاً تمام فیلدهای الزامی رستوران را پر کنید.</string>
+    <string name="error_invalid_phone_format">فرمت تلفن نامعتبر است (حداقل ۱۰ رقم).</string>
+    <string name="restaurant_created_successfully">رستوران با موفقیت ثبت شد</string>
+    <string name="error_creating_restaurant">خطا در ثبت رستوران</string>
+
+
+
+    <string name="error_fill_required_restaurant_fields">لطفاً فیلدهای الزامی (نام، آدرس، تلفن) را پر کنید.</string>
+    <string name="error_negative_tax_fee">هزینه مالیات نمی‌تواند منفی باشد.</string>
+    <string name="error_negative_additional_fee">هزینه اضافی نمی‌تواند منفی باشد.</string>
+
+
+    <string name="error_invalid_restaurant_id_for_details">خطا: شناسه رستوران برای جزئیات نامعتبر است.</string>
+
+
+    <string name="error_unexpected_data_format">خطا: فرمت داده غیرمنتظره دریافت شد.</string>
+
+
+    <string name="edit_restaurant_title">ویرایش رستوران</string>
+    <string name="restaurant_updated_successfully">رستوران با موفقیت به‌روزرسانی شد</string>
+    <string name="error_updating_restaurant">خطا در به‌روزرسانی رستوران</string>
+    <string name="delete_restaurant_dialog_title">حذف رستوران</string>
+    <string name="delete_restaurant_dialog_message">آیا از حذف رستوران با شناسه %d مطمئن هستید؟</string>
+    <string name="edit_restaurant_clicked">ویرایش رستوران %s کلیک شد</string>
+    <string name="restaurant_phone_format">تلفن: %s</string>
     <string name="menu_title">آیتم‌های منو</string>
 
     <string-array name="user_roles">
