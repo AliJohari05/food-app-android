@@ -217,6 +217,21 @@
 
     <string name="error_invalid_restaurant_id_for_details">Error: Invalid restaurant ID for details.</string>
 
+
+
+    <string name="food_item_clicked">Food item %s clicked</string>
+    <string name="edit_food_item_clicked">Edit food item %s clicked</string>
+    <string name="delete_food_item_confirm">Confirm delete food item ID: %d</string>
+    <string name="delete_food_item_dialog_title">Delete Food Item</string>
+    <string name="delete_food_item_dialog_message">Are you sure you want to delete food item ID %d?</string>
+    <string name="error_no_restaurant_selected">No restaurant selected. Please select a restaurant first.</string>
+    <string name="add_menu_or_item_clicked">Add menu or item button clicked</string>
+    <string name="food_item_price_format">Price: $%d</string>
+    <string name="food_item_supply_format">In Stock: %d</string>
+    <string name="no_food_items_found">No food items found.</string>
+    <string name="error_fetching_food_items">Error fetching food items</string>
+
+
     <string-array name="user_roles">
         <item>Buyer</item>
         <item>Seller</item>
