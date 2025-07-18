@@ -224,6 +224,21 @@
     <string name="buyer_no_delete_option">حذف برای خریداران امکان‌پذیر نیست.</string>
 
 
+
+
+    <string name="food_item_clicked">آیتم غذایی %s کلیک شد</string>
+    <string name="edit_food_item_clicked">ویرایش آیتم غذایی %s کلیک شد</string>
+    <string name="delete_food_item_confirm">تأیید حذف آیتم غذایی با شناسه: %d</string>
+    <string name="delete_food_item_dialog_title">حذف آیتم غذایی</string>
+    <string name="delete_food_item_dialog_message">آیا از حذف آیتم غذایی با شناسه %d مطمئن هستید؟</string>
+    <string name="error_no_restaurant_selected">رستورانی انتخاب نشده است. لطفاً ابتدا یک رستوران انتخاب کنید.</string>
+    <string name="add_menu_or_item_clicked">دکمه افزودن منو یا آیتم کلیک شد</string>
+    <string name="food_item_price_format">قیمت: %d دلار</string>
+    <string name="food_item_supply_format">موجودی: %d</string>
+    <string name="no_food_items_found">هیچ آیتم غذایی یافت نشد.</string>
+    <string name="error_fetching_food_items">خطا در دریافت آیتم‌های غذایی</string>
+
+a
     <string-array name="user_roles">
         <item>خریدار</item>
         <item>فروشنده</item>
