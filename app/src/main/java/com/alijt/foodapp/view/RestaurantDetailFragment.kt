@@ -1,8 +1,7 @@
-// FoodApp/app/src/main/java/com/alijt/foodapp/view/RestaurantDetailFragment.kt
 package com.alijt.foodapp.view
 
 import android.os.Bundle
-import android.util.Log // Import Log for debugging
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,11 +15,10 @@ import com.alijt.foodapp.databinding.FragmentRestaurantDetailBinding
 import com.alijt.foodapp.model.FoodItem
 import com.alijt.foodapp.model.Restaurant
 import com.alijt.foodapp.model.RestaurantMenuDetailsResponse
-import com.alijt.foodapp.model.onFailure
-import com.alijt.foodapp.model.onSuccess
-import com.alijt.foodapp.repository.MenuRepository
+import com.alijt.foodapp.model.Result // مطمئن شوید که این ایمپورت صحیح است
 import com.alijt.foodapp.network.ApiService
 import com.alijt.foodapp.network.RetrofitClient
+import com.alijt.foodapp.repository.MenuRepository
 import com.alijt.foodapp.utils.SessionManager
 import com.alijt.foodapp.viewmodel.MenuViewModel
 import com.alijt.foodapp.viewmodel.MenuViewModelFactory
@@ -28,9 +26,9 @@ import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
-import com.google.gson.JsonArray // Import JsonArray
-import com.google.gson.JsonObject // Import JsonObject
-import com.google.gson.JsonPrimitive // Import JsonPrimitive
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
+import com.google.gson.JsonPrimitive
 
 class RestaurantDetailFragment : Fragment() {
 
@@ -42,6 +40,7 @@ class RestaurantDetailFragment : Fragment() {
     private lateinit var foodItemAdapter: FoodItemAdapter
     private lateinit var sessionManager: SessionManager
 
+    // TypeToken برای کمک به Gson در deserialization لیست‌های جنریک
     private val foodItemListType = object : TypeToken<List<FoodItem>>() {}.type
 
 
@@ -79,57 +78,75 @@ class RestaurantDetailFragment : Fragment() {
             Toast.makeText(requireContext(), getString(R.string.error_invalid_restaurant_id), Toast.LENGTH_SHORT).show()
         }
 
+        // --- اصلاح شده: استفاده از when expression برای مدیریت Result ---
         menuViewModel.menuDetails.observe(viewLifecycleOwner) { result ->
-            result.onSuccess { response ->
-                displayRestaurantDetails(response.vendor)
+            when (result) {
+                is Result.Loading -> {
+                    // نمایش لودینگ
+                    binding.progressBarDetail.visibility = View.VISIBLE // اگر ProgressBar دارید
+                }
+                is Result.Success<*> -> { // از <*> استفاده کنید و سپس cast کنید
+                    binding.progressBarDetail.visibility = View.GONE
+                    val responseData = result.data // اینجا هنوز Any? است
+                    if (responseData is RestaurantMenuDetailsResponse) { // بررسی نوع دقیق
+                        displayRestaurantDetails(responseData.vendor)
 
-                val allFoodItems = mutableListOf<FoodItem>()
-                response.menuTitles.forEach { title ->
-                    response.additionalProperties?.get(title)?.let { jsonElement ->
-                        // NEW LOGS FOR DEBUGGING
-                        Log.d("GsonDebug", "--- Processing Menu Category: $title ---")
-                        Log.d("GsonDebug", "JsonElement for $title: ${jsonElement.toString()}")
-                        Log.d("GsonDebug", "Is JsonArray: ${jsonElement.isJsonArray}")
-                        Log.d("GsonDebug", "Is JsonObject: ${jsonElement.isJsonObject}")
-                        Log.d("GsonDebug", "Is JsonPrimitive: ${jsonElement.isJsonPrimitive}")
-                        Log.d("GsonDebug", "Is JsonNull: ${jsonElement.isJsonNull}")
-
-                        if (jsonElement.isJsonArray) { // Only try to parse if it's actually a JsonArray
-                            try {
-                                val itemsForCategory = Gson().fromJson<List<FoodItem>>(jsonElement, foodItemListType)
-                                Log.d("GsonDebug", "Parsed items for $title: ${itemsForCategory.size} items")
-                                allFoodItems.addAll(itemsForCategory)
-                            } catch (e: JsonSyntaxException) {
-                                Toast.makeText(requireContext(), "Error parsing menu items for $title: ${e.message}", Toast.LENGTH_LONG).show()
-                                Log.e("RestaurantDetail", "JsonSyntaxException for $title:", e)
-                                e.printStackTrace()
-                            } catch (e: Exception) {
-                                Toast.makeText(requireContext(), "Unexpected error parsing menu items for $title: ${e.message}", Toast.LENGTH_LONG).show()
-                                Log.e("RestaurantDetail", "Unexpected Exception for $title:", e)
-                                e.printStackTrace()
+                        val allFoodItems = mutableListOf<FoodItem>()
+                        responseData.menuTitles.forEach { title ->
+                            responseData.additionalProperties?.get(title)?.let { jsonElement ->
+                                Log.d("GsonDebug", "--- Processing Menu Category: $title ---")
+                                Log.d("GsonDebug", "JsonElement for $title: ${jsonElement.toString()}")
+                                if (jsonElement.isJsonArray) {
+                                    try {
+                                        val itemsForCategory = Gson().fromJson<List<FoodItem>>(jsonElement, foodItemListType)
+                                        Log.d("GsonDebug", "Parsed items for $title: ${itemsForCategory.size} items")
+                                        allFoodItems.addAll(itemsForCategory)
+                                    } catch (e: JsonSyntaxException) {
+                                        Toast.makeText(requireContext(), "Error parsing menu items for $title: ${e.message}", Toast.LENGTH_LONG).show()
+                                        Log.e("RestaurantDetail", "JsonSyntaxException for $title:", e)
+                                        e.printStackTrace()
+                                    } catch (e: Exception) {
+                                        Toast.makeText(requireContext(), "Unexpected error parsing menu items for $title: ${e.message}", Toast.LENGTH_LONG).show()
+                                        Log.e("RestaurantDetail", "Unexpected Exception for $title:", e)
+                                        e.printStackTrace()
+                                    }
+                                } else {
+                                    Log.e("GsonDebug", "JsonElement for $title is NOT a JsonArray. Type: ${jsonElement.javaClass.simpleName}")
+                                    Toast.makeText(requireContext(), "Unexpected menu item data format for $title", Toast.LENGTH_LONG).show()
+                                }
                             }
-                        } else {
-                            Log.e("GsonDebug", "JsonElement for $title is NOT a JsonArray. Type: ${jsonElement.javaClass.simpleName}")
-                            Toast.makeText(requireContext(), "Unexpected menu item data format for $title", Toast.LENGTH_LONG).show()
                         }
+                        if (allFoodItems.isEmpty()) {
+                            Toast.makeText(requireContext(), getString(R.string.no_menu_items_found), Toast.LENGTH_SHORT).show()
+                        } else {
+                            foodItemAdapter.submitList(allFoodItems)
+                        }
+                    } else {
+                        // در صورت دریافت نوع داده غیرمنتظره
+                        Toast.makeText(requireContext(), getString(R.string.error_unexpected_data_format), Toast.LENGTH_LONG).show()
                     }
                 }
-                if (allFoodItems.isEmpty()) {
-                    Toast.makeText(requireContext(), getString(R.string.no_menu_items_found), Toast.LENGTH_SHORT).show()
-                } else {
-                    foodItemAdapter.submitList(allFoodItems)
+                is Result.Failure -> { // بدون Type Argument
+                    binding.progressBarDetail.visibility = View.GONE
+                    Toast.makeText(requireContext(), getString(R.string.failed_to_load_menu) + ": ${result.exception.message}", Toast.LENGTH_LONG).show()
                 }
-
-            }.onFailure { exception ->
-                Toast.makeText(requireContext(), getString(R.string.failed_to_load_menu) + ": ${exception.message}", Toast.LENGTH_LONG).show()
             }
         }
+        // --- پایان اصلاح ---
     }
 
     private fun setupRecyclerView() {
-        foodItemAdapter = FoodItemAdapter { foodItem ->
-            Toast.makeText(requireContext(), "Add/Remove ${foodItem.name} to cart", Toast.LENGTH_SHORT).show()
-        }
+        foodItemAdapter = FoodItemAdapter(
+            onItemClick = { foodItem ->
+                Toast.makeText(requireContext(), "Add/Remove ${foodItem.name} to cart", Toast.LENGTH_SHORT).show()
+            },
+            onEditClick = { foodItem ->
+                Toast.makeText(requireContext(), getString(R.string.buyer_no_edit_option), Toast.LENGTH_SHORT).show()
+            },
+            onDeleteClick = { foodItemId ->
+                Toast.makeText(requireContext(), getString(R.string.buyer_no_delete_option), Toast.LENGTH_SHORT).show()
+            }
+        )
         binding.rvMenuItems.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = foodItemAdapter

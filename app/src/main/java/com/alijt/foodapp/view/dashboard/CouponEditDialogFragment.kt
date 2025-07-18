@@ -10,13 +10,13 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import com.alijt.foodapp.R
-import com.alijt.foodapp.databinding.FragmentCouponEditDialogBinding // باید ایجاد شود
+import com.alijt.foodapp.databinding.FragmentCouponEditDialogBinding
 import com.alijt.foodapp.model.Coupon
 import com.alijt.foodapp.model.UpdateCouponRequest
 import com.alijt.foodapp.model.Result
 import com.alijt.foodapp.network.RetrofitClient
 import com.alijt.foodapp.repository.AdminRepository
-import com.alijt.foodapp.utils.SessionManager
+import com.alijt.foodapp.utils.SessionManager // <-- اضافه شد
 import com.alijt.foodapp.viewmodel.AdminViewModel
 import com.alijt.foodapp.viewmodel.AdminViewModelFactory
 import java.text.SimpleDateFormat
@@ -30,13 +30,12 @@ class CouponEditDialogFragment : DialogFragment() {
     private lateinit var adminViewModel: AdminViewModel
     private var currentCoupon: Coupon? = null
 
-    // تگ برای آرگومان‌های Fragment
     companion object {
         const val ARG_COUPON = "coupon_object"
         fun newInstance(coupon: Coupon): CouponEditDialogFragment {
             val fragment = CouponEditDialogFragment()
             val args = Bundle().apply {
-                putParcelable(ARG_COUPON, coupon) // مطمئن شوید Coupon قابل Parcelable باشد
+                putParcelable(ARG_COUPON, coupon)
             }
             fragment.arguments = args
             return fragment
@@ -46,7 +45,7 @@ class CouponEditDialogFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            currentCoupon = it.getParcelable(ARG_COUPON) // دریافت شیء کوپن
+            currentCoupon = it.getParcelable(ARG_COUPON)
         }
     }
 
@@ -62,13 +61,13 @@ class CouponEditDialogFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val apiService = RetrofitClient.instance
-        val sessionManager = SessionManager(requireContext())
-        val adminRepository = AdminRepository(apiService)
-        adminViewModel = ViewModelProvider(requireActivity(), AdminViewModelFactory(adminRepository, sessionManager))
+        val sessionManager = SessionManager(requireContext()) // <-- sessionManager تعریف شد
+        val adminRepository = AdminRepository(apiService, sessionManager) // <-- sessionManager به AdminRepository پاس داده شد
+        adminViewModel = ViewModelProvider(requireActivity(), AdminViewModelFactory(adminRepository, sessionManager)) // <-- sessionManager به Factory پاس داده شد
             .get(AdminViewModel::class.java)
 
         setupSpinners()
-        populateCouponData() // پر کردن فیلدها با اطلاعات کوپن
+        populateCouponData()
         setupListeners()
         observeViewModel()
     }
@@ -83,7 +82,7 @@ class CouponEditDialogFragment : DialogFragment() {
     private fun populateCouponData() {
         currentCoupon?.let { coupon ->
             binding.etCouponCode.setText(coupon.coupon_code)
-            binding.etCouponCode.isEnabled = false // کد کوپن معمولا قابل ویرایش نیست
+            binding.etCouponCode.isEnabled = false
 
             val typePosition = (binding.spinnerCouponType.adapter as ArrayAdapter<String>).getPosition(coupon.type)
             binding.spinnerCouponType.setSelection(typePosition)
@@ -149,7 +148,6 @@ class CouponEditDialogFragment : DialogFragment() {
 
     private fun showDatePickerDialog(targetEditText: com.google.android.material.textfield.TextInputEditText) {
         val calendar = Calendar.getInstance()
-        // سعی کنید تاریخ موجود در EditText را به عنوان تاریخ پیش فرض تقویم تنظیم کنید
         val existingDate = targetEditText.text.toString()
         if (existingDate.isNotEmpty()) {
             try {
@@ -191,7 +189,7 @@ class CouponEditDialogFragment : DialogFragment() {
                     binding.progressBarEditCoupon.visibility = View.GONE
                     binding.btnSaveChanges.isEnabled = true
                     Toast.makeText(requireContext(), getString(R.string.coupon_updated_successfully), Toast.LENGTH_SHORT).show()
-                    dismiss() // بستن دیالوگ پس از موفقیت
+                    dismiss()
                 }
                 is Result.Failure -> {
                     binding.progressBarEditCoupon.visibility = View.GONE

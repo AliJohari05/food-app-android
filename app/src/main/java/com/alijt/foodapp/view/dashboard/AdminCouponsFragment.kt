@@ -39,9 +39,9 @@ class AdminCouponsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val apiService = RetrofitClient.instance
-        val sessionManager = SessionManager(requireContext())
-        val adminRepository = AdminRepository(apiService)
-        adminViewModel = ViewModelProvider(requireActivity(), AdminViewModelFactory(adminRepository, sessionManager))
+        val sessionManager = SessionManager(requireContext()) // <-- sessionManager اینجا تعریف شده است
+        val adminRepository = AdminRepository(apiService, sessionManager) // <-- sessionManager به AdminRepository پاس داده شد
+        adminViewModel = ViewModelProvider(requireActivity(), AdminViewModelFactory(adminRepository, sessionManager)) // <-- sessionManager به Factory پاس داده شد
             .get(AdminViewModel::class.java)
 
         setupRecyclerView()
@@ -79,8 +79,17 @@ class AdminCouponsFragment : Fragment() {
         adminViewModel.couponsList.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> { binding.progressBarCoupons.visibility = View.VISIBLE }
-                is Result.Success -> {
-                    couponAdapter.submitList(result.data)
+                is Result.Success<*> -> {
+                    val data = result.data
+                    if (data is List<*>) {
+                        val couponList = data as List<Coupon>
+                        couponAdapter.submitList(couponList)
+                        if (couponList.isEmpty()) {
+                            Toast.makeText(requireContext(), getString(R.string.no_coupons_found), Toast.LENGTH_SHORT).show() // <-- رشته جدید
+                        }
+                    } else {
+                        Toast.makeText(requireContext(), getString(R.string.error_unexpected_data_format), Toast.LENGTH_LONG).show()
+                    }
                     binding.progressBarCoupons.visibility = View.GONE
                 }
                 is Result.Failure -> {
@@ -90,7 +99,7 @@ class AdminCouponsFragment : Fragment() {
             }
         }
 
-        adminViewModel.couponCreateResult.observe(viewLifecycleOwner) { result -> // <-- observe تغییر می‌کند
+        adminViewModel.couponCreateResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> { /* Show loading */ }
                 is Result.Success -> { Toast.makeText(requireContext(), getString(R.string.coupon_created_successfully), Toast.LENGTH_SHORT).show() }
@@ -98,7 +107,7 @@ class AdminCouponsFragment : Fragment() {
             }
         }
 
-        adminViewModel.couponUpdateResult.observe(viewLifecycleOwner) { result -> // <-- observe تغییر می‌کند
+        adminViewModel.couponUpdateResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> { /* Show loading */ }
                 is Result.Success -> { Toast.makeText(requireContext(), getString(R.string.coupon_updated_successfully), Toast.LENGTH_SHORT).show() }
@@ -106,11 +115,16 @@ class AdminCouponsFragment : Fragment() {
             }
         }
 
-        adminViewModel.couponDeleteResult.observe(viewLifecycleOwner) { result -> // <-- observe تغییر می‌کند
+        adminViewModel.couponDeleteResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> { /* Show loading */ }
-                is Result.Success -> {
-                    Toast.makeText(requireContext(), result.data, Toast.LENGTH_SHORT).show()
+                is Result.Success<*> -> {
+                    val message = result.data
+                    if (message is String) {
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(), getString(R.string.operation_successful), Toast.LENGTH_SHORT).show()
+                    }
                 }
                 is Result.Failure -> {
                     Toast.makeText(requireContext(), getString(R.string.error_deleting_coupon) + ": ${result.exception.message}", Toast.LENGTH_LONG).show()
@@ -118,7 +132,7 @@ class AdminCouponsFragment : Fragment() {
             }
         }
 
-        adminViewModel.couponDetails.observe(viewLifecycleOwner) { result -> // <-- observe تغییر می‌کند
+        adminViewModel.couponDetails.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> { /* Show loading */ }
                 is Result.Success -> { Toast.makeText(requireContext(), getString(R.string.coupon_details_loaded, result.data.coupon_code), Toast.LENGTH_SHORT).show() }

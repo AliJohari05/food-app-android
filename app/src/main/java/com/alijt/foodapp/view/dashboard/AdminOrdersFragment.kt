@@ -1,5 +1,6 @@
 package com.alijt.foodapp.view.dashboard
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +11,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alijt.foodapp.R
 import com.alijt.foodapp.adapter.OrderAdapter
-import com.alijt.foodapp.databinding.FragmentAdminOrdersBinding // باید ایجاد شود
+import com.alijt.foodapp.databinding.FragmentAdminOrdersBinding
 import com.alijt.foodapp.model.Result
+import com.alijt.foodapp.model.Order
+import com.alijt.foodapp.model.MessageResponse // اضافه شد
 import com.alijt.foodapp.network.RetrofitClient
 import com.alijt.foodapp.repository.AdminRepository
 import com.alijt.foodapp.utils.SessionManager
@@ -38,21 +41,27 @@ class AdminOrdersFragment : Fragment() {
 
         val apiService = RetrofitClient.instance
         val sessionManager = SessionManager(requireContext())
-        val adminRepository = AdminRepository(apiService)
-        val factory = AdminViewModelFactory(adminRepository, sessionManager)
-        adminViewModel = ViewModelProvider(requireActivity(), factory).get(AdminViewModel::class.java) // ViewModel مشترک
+        val adminRepository = AdminRepository(apiService, sessionManager)
+        adminViewModel = ViewModelProvider(requireActivity(), AdminViewModelFactory(adminRepository, sessionManager))
+            .get(AdminViewModel::class.java)
 
         setupRecyclerView()
         observeViewModels()
 
-        adminViewModel.fetchAllOrders() // دریافت داده‌ها
+        adminViewModel.fetchAllOrders()
     }
 
     private fun setupRecyclerView() {
-        orderAdapter = OrderAdapter { order ->
-            Toast.makeText(requireContext(), getString(R.string.order_clicked_message, order.id), Toast.LENGTH_SHORT).show()
-        }
-        binding.rvOrders.apply {
+        orderAdapter = OrderAdapter(
+            onClick = { order ->
+                Toast.makeText(requireContext(), getString(R.string.order_clicked_message, order.id), Toast.LENGTH_SHORT).show()
+            },
+            onStatusChangeClick = { order, newStatus ->
+                Toast.makeText(requireContext(), getString(R.string.update_order_status_clicked, order.id, newStatus), Toast.LENGTH_SHORT).show()
+                showUpdateOrderStatusDialog(order, newStatus)
+            }
+        )
+        binding.rvSellerOrders.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = orderAdapter
         }
@@ -61,16 +70,41 @@ class AdminOrdersFragment : Fragment() {
     private fun observeViewModels() {
         adminViewModel.ordersList.observe(viewLifecycleOwner) { result ->
             when (result) {
-                is Result.Loading -> {
-                    binding.progressBarOrders.visibility = View.VISIBLE
-                }
-                is Result.Success -> {
-                    orderAdapter.submitList(result.data)
-                    binding.progressBarOrders.visibility = View.GONE
+                is Result.Loading -> { binding.progressBarSellerOrders.visibility = View.VISIBLE }
+                is Result.Success<*> -> {
+                    val data = result.data
+                    if (data is List<*>) {
+                        val orderList = data as List<Order>
+                        orderAdapter.submitList(orderList)
+                        if (orderList.isEmpty()) {
+                            Toast.makeText(requireContext(), getString(R.string.no_orders_found), Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(requireContext(), getString(R.string.error_unexpected_data_format), Toast.LENGTH_LONG).show()
+                    }
+                    binding.progressBarSellerOrders.visibility = View.GONE
                 }
                 is Result.Failure -> {
                     Toast.makeText(requireContext(), getString(R.string.error_fetching_orders) + ": ${result.exception.message}", Toast.LENGTH_LONG).show()
-                    binding.progressBarOrders.visibility = View.GONE
+                    binding.progressBarSellerOrders.visibility = View.GONE
+                }
+            }
+        }
+
+        adminViewModel.userStatusUpdateResult.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> { /* نمایش لودینگ */ }
+                is Result.Success<*> -> { // <-- استفاده از <*>
+                    val message = result.data // اینجا message از نوع Any? است (که انتظار String را داریم)
+                    if (message is String) { // <-- بررسی نوع
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(), getString(R.string.operation_successful), Toast.LENGTH_SHORT).show() // Fallback message
+                    }
+                    adminViewModel.fetchAllOrders() // رفرش لیست
+                }
+                is Result.Failure -> {
+                    Toast.makeText(requireContext(), getString(R.string.error_updating_order_status) + ": ${result.exception.message}", Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -79,5 +113,19 @@ class AdminOrdersFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun showUpdateOrderStatusDialog(order: Order, newStatus: String) {
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.update_order_status_dialog_title))
+            .setMessage(getString(R.string.update_order_status_dialog_message, order.id, newStatus))
+            .setPositiveButton(getString(R.string.confirm_button)) { dialog, _ ->
+                adminViewModel.updateOrderStatus(order.id, newStatus)
+                dialog.dismiss()
+            }
+            .setNegativeButton(getString(R.string.cancel_button)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 }

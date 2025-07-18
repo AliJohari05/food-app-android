@@ -1,62 +1,52 @@
-// FoodApp/app/src/main/java/com/alijt/foodapp/adapter/FoodItemAdapter.kt
 package com.alijt.foodapp.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.alijt.foodapp.R
-import com.alijt.foodapp.databinding.ItemFoodItemBinding // Correct binding for item_food_item.xml
-// import com.alijt.foodapp.databinding.ItemRestaurantBinding // This import is not needed here
-import com.alijt.foodapp.model.FoodItem // Import FoodItem model
-// import com.alijt.foodapp.model.Restaurant // This import is not needed here
-import com.bumptech.glide.Glide
+import com.alijt.foodapp.databinding.ItemFoodItemBinding
+import com.alijt.foodapp.model.FoodItem
 
-class FoodItemAdapter(private val clickListener: (FoodItem) -> Unit) : RecyclerView.Adapter<FoodItemAdapter.FoodItemViewHolder>() {
+class FoodItemAdapter(
+    private val onItemClick: (FoodItem) -> Unit,
+    private val onEditClick: (FoodItem) -> Unit,
+    private val onDeleteClick: (Int) -> Unit
+) : ListAdapter<FoodItem, FoodItemAdapter.FoodItemViewHolder>(FoodItemDiffCallback()) {
 
-    private var foodItems: List<FoodItem> = emptyList()
-
-    // Corrected: submitList now accepts List<FoodItem> directly
-    fun submitList(newFoodItems: List<FoodItem>) {
-        foodItems = newFoodItems
-        notifyDataSetChanged() // Notify the adapter that data has changed
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodItemViewHolder {
+        val binding = ItemFoodItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return FoodItemViewHolder(binding)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodItemViewHolder { // Corrected ViewHolder type
-        // Inflate item_food_item.xml and create ItemFoodItemBinding
-        val binding = ItemFoodItemBinding.inflate(LayoutInflater.from(parent.context), parent, false) // Corrected binding
-        return FoodItemViewHolder(binding) // Corrected ViewHolder class
+    override fun onBindViewHolder(holder: FoodItemViewHolder, position: Int) {
+        val foodItem = getItem(position)
+        holder.bind(foodItem, onItemClick, onEditClick, onDeleteClick)
     }
 
-    override fun onBindViewHolder(holder: FoodItemViewHolder, position: Int) { // Corrected ViewHolder type
-        val foodItem = foodItems[position] // Corrected variable name and type
-        holder.bind(foodItem)
-    }
-
-    override fun getItemCount(): Int = foodItems.size // Corrected variable name
-
-    inner class FoodItemViewHolder(private val binding: ItemFoodItemBinding) : RecyclerView.ViewHolder(binding.root) { // Corrected binding and class name
-        fun bind(foodItem: FoodItem) { // Corrected parameter type
+    class FoodItemViewHolder(private val binding: ItemFoodItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(foodItem: FoodItem, onItemClick: (FoodItem) -> Unit, onEditClick: (FoodItem) -> Unit, onDeleteClick: (Int) -> Unit) {
             binding.tvFoodItemName.text = foodItem.name
-            binding.tvFoodItemDescription.text = foodItem.description ?: ""
-            // CORRECTED: Pass Double directly to getString, and check price_format in strings.xml
-            binding.tvFoodItemPrice.text = binding.root.context.getString(R.string.price_format, foodItem.price)
-            binding.tvFoodItemSupply.text = binding.root.context.getString(R.string.supply_format, foodItem.supply)
+            binding.tvFoodItemDescription.text = foodItem.description
+            binding.tvFoodItemPrice.text = binding.root.context.getString(R.string.food_item_price_format, foodItem.price) // رشته جدید
+            binding.tvFoodItemSupply.text = binding.root.context.getString(R.string.food_item_supply_format, foodItem.supply) // رشته جدید
 
-            // CORRECTED: Use foodItem.imageUrl and resolve Glide ambiguity
-            foodItem.imageUrl?.let { imageUrl ->
-                Glide.with(binding.ivFoodItemImage.context)
-                    .load(imageUrl as String?) // Explicitly cast to String? to resolve ambiguity
-                    .placeholder(android.R.drawable.ic_menu_gallery)
-                    .error(android.R.drawable.ic_menu_gallery)
-                    .into(binding.ivFoodItemImage)
-            } ?: run {
-                binding.ivFoodItemImage.setImageResource(android.R.drawable.ic_menu_gallery)
-            }
+            binding.root.setOnClickListener { onItemClick(foodItem) }
 
-            binding.btnAddRemoveCart.setOnClickListener {
-                clickListener(foodItem)
-            }
+            binding.btnEditFoodItem.setOnClickListener { onEditClick(foodItem) } // فرض شده btnEditFoodItem در XML هست
+            binding.btnDeleteFoodItem.setOnClickListener { foodItem.id?.let { id -> onDeleteClick(id) } } // فرض شده btnDeleteFoodItem در XML هست
+        }
+    }
+
+    private class FoodItemDiffCallback : DiffUtil.ItemCallback<FoodItem>() {
+        override fun areItemsTheSame(oldItem: FoodItem, newItem: FoodItem): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: FoodItem, newItem: FoodItem): Boolean {
+            return oldItem == newItem
         }
     }
 }

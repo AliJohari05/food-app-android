@@ -27,7 +27,8 @@ class AdminViewModel(
     private val _couponsList = MutableLiveData<Result<List<Coupon>>>()
     val couponsList: LiveData<Result<List<Coupon>>> = _couponsList
 
-    private val _userStatusUpdateResult = SingleLiveEvent<Result<String>>()
+    // تغییر نوع LiveData به Result<String>
+    private val _userStatusUpdateResult = SingleLiveEvent<Result<String>>() // <-- این خط باید اینگونه باشد
     val userStatusUpdateResult: LiveData<Result<String>> = _userStatusUpdateResult
 
     private val _couponCreateResult = SingleLiveEvent<Result<Coupon>>()
@@ -43,7 +44,7 @@ class AdminViewModel(
     val couponDetails: LiveData<Result<Coupon>> = _couponDetails
 
     fun fetchAllUsers() {
-        _usersList.value = Result.Loading(null) // <-- اصلاح شد
+        _usersList.value = Result.Loading(null)
         viewModelScope.launch {
             val token = sessionManager.getAuthToken()
             if (token != null) {
@@ -55,11 +56,12 @@ class AdminViewModel(
     }
 
     fun updateUserStatus(userId: String, status: String) {
-        _userStatusUpdateResult.value = Result.Loading(null) // <-- اصلاح شد
+        _userStatusUpdateResult.value = Result.Loading(null)
         viewModelScope.launch {
             val token = sessionManager.getAuthToken()
             if (token != null) {
                 val request = UserStatusUpdateRequest(status = status)
+                // این فراخوانی اکنون Result<String> برمی‌گرداند.
                 _userStatusUpdateResult.value = repository.updateUserStatus(token, userId, request)
             } else {
                 _userStatusUpdateResult.value = Result.Failure(Exception("Authentication token not found."))
@@ -68,7 +70,7 @@ class AdminViewModel(
     }
 
     fun fetchAllOrders(status: String? = null, search: String? = null, vendor: String? = null, courier: String? = null, customer: String? = null) {
-        _ordersList.value = Result.Loading(null) // <-- اصلاح شد
+        _ordersList.value = Result.Loading(null)
         viewModelScope.launch {
             val token = sessionManager.getAuthToken()
             if (token != null) {
@@ -80,7 +82,7 @@ class AdminViewModel(
     }
 
     fun fetchAllTransactions(search: String? = null, user: String? = null, method: String? = null, status: String? = null) {
-        _transactionsList.value = Result.Loading(null) // <-- اصلاح شد
+        _transactionsList.value = Result.Loading(null)
         viewModelScope.launch {
             val token = sessionManager.getAuthToken()
             if (token != null) {
@@ -92,7 +94,7 @@ class AdminViewModel(
     }
 
     fun fetchAllCoupons() {
-        _couponsList.value = Result.Loading(null) // <-- اصلاح شد
+        _couponsList.value = Result.Loading(null)
         viewModelScope.launch {
             val token = sessionManager.getAuthToken()
             if (token != null) {
@@ -104,7 +106,7 @@ class AdminViewModel(
     }
 
     fun createCoupon(request: CreateCouponRequest) {
-        _couponCreateResult.value = Result.Loading(null) // <-- اصلاح شد
+        _couponCreateResult.value = Result.Loading(null)
         viewModelScope.launch {
             val token = sessionManager.getAuthToken()
             if (token != null) {
@@ -119,7 +121,7 @@ class AdminViewModel(
     }
 
     fun getCouponDetails(couponId: String) {
-        _couponDetails.value = Result.Loading(null) // <-- اصلاح شد
+        _couponDetails.value = Result.Loading(null)
         viewModelScope.launch {
             val token = sessionManager.getAuthToken()
             if (token != null) {
@@ -131,7 +133,7 @@ class AdminViewModel(
     }
 
     fun updateCoupon(couponId: String, request: UpdateCouponRequest) {
-        _couponUpdateResult.value = Result.Loading(null) // <-- اصلاح شد
+        _couponUpdateResult.value = Result.Loading(null)
         viewModelScope.launch {
             val token = sessionManager.getAuthToken()
             if (token != null) {
@@ -146,7 +148,7 @@ class AdminViewModel(
     }
 
     fun deleteCoupon(couponId: String) {
-        _couponDeleteResult.value = Result.Loading(null) // <-- اصلاح شد
+        _couponDeleteResult.value = Result.Loading(null)
         viewModelScope.launch {
             val token = sessionManager.getAuthToken()
             if (token != null) {
@@ -156,6 +158,31 @@ class AdminViewModel(
                 }
             } else {
                 _couponDeleteResult.value = Result.Failure(Exception("Authentication token not found."))
+            }
+        }
+    }
+
+    fun updateOrderStatus(orderId: Int, newStatus: String) {
+        // این LiveData برای پیام‌های عمومی است، بنابراین باید با Result<MessageResponse> سازگار باشد.
+        _userStatusUpdateResult.value = Result.Loading(null) // <-- در اینجا Result<String> را منتشر می‌کنیم.
+        viewModelScope.launch {
+            val request = OrderStatusUpdateRequest(status = newStatus)
+            val token = sessionManager.getAuthToken()
+            if (token != null) {
+                // repository.updateOrderStatusByRestaurant همچنان Result<MessageResponse> را برمی‌گرداند.
+                // پس لازم است پیام آن را به String تبدیل کرده و به _userStatusUpdateResult.value بدهیم.
+                val result = repository.updateOrderStatusByRestaurant(orderId, request, token)
+                // اگر Result<MessageResponse> را به _userStatusUpdateResult (از نوع Result<String>) اختصاص دهیم، Type Mismatch داریم.
+                // پس باید محتوای موفقیت را به String تبدیل کنیم.
+                _userStatusUpdateResult.value = if (result is Result.Success) {
+                    Result.Success(result.data.message) // <-- MessageResponse.message را به String تبدیل کن
+                } else if (result is Result.Failure) {
+                    Result.Failure(result.exception) // خطا را مستقیماً منتقل کن
+                } else {
+                    Result.Loading(null) // وضعیت Loading را حفظ کن
+                }
+            } else {
+                _userStatusUpdateResult.value = Result.Failure(Exception("Authentication token not found."))
             }
         }
     }

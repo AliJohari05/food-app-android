@@ -15,7 +15,7 @@ import com.alijt.foodapp.model.CreateCouponRequest
 import com.alijt.foodapp.model.Result
 import com.alijt.foodapp.network.RetrofitClient
 import com.alijt.foodapp.repository.AdminRepository
-import com.alijt.foodapp.utils.SessionManager
+import com.alijt.foodapp.utils.SessionManager // <-- اضافه شد
 import com.alijt.foodapp.viewmodel.AdminViewModel
 import com.alijt.foodapp.viewmodel.AdminViewModelFactory
 import java.text.SimpleDateFormat
@@ -40,9 +40,9 @@ class CouponCreateDialogFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val apiService = RetrofitClient.instance
-        val sessionManager = SessionManager(requireContext())
-        val adminRepository = AdminRepository(apiService)
-        adminViewModel = ViewModelProvider(requireActivity(), AdminViewModelFactory(adminRepository, sessionManager))
+        val sessionManager = SessionManager(requireContext()) // <-- sessionManager تعریف شد
+        val adminRepository = AdminRepository(apiService, sessionManager) // <-- sessionManager به AdminRepository پاس داده شد
+        adminViewModel = ViewModelProvider(requireActivity(), AdminViewModelFactory(adminRepository, sessionManager)) // <-- sessionManager به Factory پاس داده شد
             .get(AdminViewModel::class.java)
 
         setupSpinners()
@@ -108,6 +108,17 @@ class CouponCreateDialogFragment : DialogFragment() {
 
     private fun showDatePickerDialog(targetEditText: com.google.android.material.textfield.TextInputEditText) {
         val calendar = Calendar.getInstance()
+        val existingDate = targetEditText.text.toString()
+        if (existingDate.isNotEmpty()) {
+            try {
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val date = dateFormat.parse(existingDate)
+                date?.let { calendar.time = it }
+            } catch (e: Exception) {
+                // اگر فرمت تاریخ موجود صحیح نبود، تاریخ فعلی را نشان بده
+            }
+        }
+
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)

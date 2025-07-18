@@ -30,7 +30,7 @@
             android:layout_marginTop="4dp"
             android:textSize="14sp"
             android:textColor="?android:attr/textColorSecondary"
-            tools:text="Status: Completed"/>
+            tools:text="Status: Waiting Vendor"/>
 
         <TextView
             android:id="@+id/tvOrderPrice"
@@ -42,6 +42,42 @@
             android:textColor="?android:attr/textColorTertiary"
             tools:text="Price: $50.00"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <Button
+                android:id="@+id/btnAcceptOrder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/order_status_accept"
+                android:layout_marginEnd="4dp"
+                android:visibility="gone"
+                style="?attr/materialButtonOutlinedStyle"/>
+
+            <Button
+                android:id="@+id/btnRejectOrder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/order_status_reject"
+                android:layout_marginStart="4dp"
+                android:visibility="gone"
+                android:backgroundTint="@color/orange_primary_dark"
+                android:textColor="@android:color/white"/>
+
+            <Button
+                android:id="@+id/btnServeOrder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/order_status_served"
+                android:layout_marginStart="4dp"
+                android:visibility="gone"/>
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

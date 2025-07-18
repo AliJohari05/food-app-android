@@ -238,7 +238,23 @@
     <string name="no_food_items_found">هیچ آیتم غذایی یافت نشد.</string>
     <string name="error_fetching_food_items">خطا در دریافت آیتم‌های غذایی</string>
 
-a
+    <string name="restaurant_logo_desc">لوگوی رستوران</string>
+    <string name="menu_items_title">آیتم‌های منو</string>
+    <string name="error_updating_order_status">خطا در به‌روزرسانی وضعیت سفارش</string>
+
+
+    <string name="no_orders_found">هیچ سفارشی یافت نشد.</string>
+    <string name="update_order_status_clicked">به‌روزرسانی سفارش %d به %s کلیک شد</string>
+    <string name="update_order_status_dialog_title">به‌روزرسانی وضعیت سفارش</string>
+    <string name="update_order_status_dialog_message">آیا از تغییر وضعیت سفارش %d به %s مطمئن هستید؟</string>
+    <string name="confirm_button">تأیید</string>
+    <string name="order_status_accept">پذیرش</string>
+    <string name="order_status_reject">رد</string>
+    <string name="order_status_served">آماده تحویل</string>
+
+    <string name="no_coupons_found">هیچ کوپنی یافت نشد.</string>
+    <string name="no_transactions_found">هیچ تراکنشی یافت نشد.</string>
+
     <string-array name="user_roles">
         <item>خریدار</item>
         <item>فروشنده</item>

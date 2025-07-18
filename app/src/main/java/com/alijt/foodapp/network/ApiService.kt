@@ -32,22 +32,48 @@ interface ApiService {
     suspend fun updateRestaurantDetails(@Header("Authorization") token: String, @Path("id") restaurantId: Int, @Body request: Restaurant): Response<Restaurant>
 
     @POST("restaurants/{id}/item")
-    suspend fun addFoodItem(@Header("Authorization") token: String, @Path("id") restaurantId: Int, @Body item: FoodItem): Response<FoodItem>
+    suspend fun addFoodItem(
+        @Header("Authorization") token: String,
+        @Path("id") restaurantId: Int,
+        @Body item: FoodItem
+    ): Response<FoodItem>
 
     @PUT("restaurants/{id}/item/{item_id}")
-    suspend fun editFoodItem(@Header("Authorization") token: String, @Path("id") restaurantId: Int, @Path("item_id") itemId: Int, @Body item: FoodItem): Response<FoodItem>
+    suspend fun editFoodItem(
+        @Header("Authorization") token: String,
+        @Path("id") restaurantId: Int, // id رستوران
+        @Path("item_id") itemId: Int, // id آیتم غذایی
+        @Body item: FoodItem // FoodItem برای به‌روزرسانی
+    ): Response<FoodItem> // بازگشت FoodItem به‌روز شده
 
     @DELETE("restaurants/{id}/item/{item_id}")
-    suspend fun deleteFoodItem(@Header("Authorization") token: String, @Path("id") restaurantId: Int, @Path("item_id") itemId: Int): Response<MessageResponse>
+    suspend fun deleteFoodItem(
+        @Header("Authorization") token: String,
+        @Path("id") restaurantId: Int,
+        @Path("item_id") itemId: Int
+    ): Response<MessageResponse> // بازگشت پیام موفقیت
 
     @POST("restaurants/{id}/menu")
-    suspend fun addRestaurantMenu(@Header("Authorization") token: String, @Path("id") restaurantId: Int, @Body request: Map<String, String>): Response<Map<String, String>> // Assuming title is sent as part of map
+    suspend fun createRestaurantMenu(
+        @Header("Authorization") token: String,
+        @Path("id") restaurantId: Int,
+        @Body createMenuRequest: CreateMenuRequest // مدل برای ساخت منو جدید
+    ): Response<Category> // بازگشت Category ایجاد شده (شامل title)
 
     @DELETE("restaurants/{id}/menu/{title}")
-    suspend fun deleteRestaurantMenu(@Header("Authorization") token: String, @Path("id") restaurantId: Int, @Path("title") title: String): Response<MessageResponse>
+    suspend fun deleteRestaurantMenu(
+        @Header("Authorization") token: String,
+        @Path("id") restaurantId: Int,
+        @Path("title") menuTitle: String // عنوان منو
+    ): Response<MessageResponse>
 
     @PUT("restaurants/{id}/menu/{title}")
-    suspend fun addItemToMenu(@Header("Authorization") token: String, @Path("id") restaurantId: Int, @Path("title") title: String, @Body request: Map<String, Int>): Response<MessageResponse> // Assuming item_id is sent as map
+    suspend fun addItemToMenu(
+        @Header("Authorization") token: String,
+        @Path("id") restaurantId: Int,
+        @Path("title") menuTitle: String,
+        @Body addItemToMenuRequest: AddItemToMenuRequest
+    ): Response<MessageResponse>
 
     @DELETE("restaurants/{id}/menu/{title}/{item_id}")
     suspend fun deleteItemFromMenu(@Header("Authorization") token: String, @Path("id") restaurantId: Int, @Path("title") title: String, @Path("item_id") itemId: Int): Response<MessageResponse>
@@ -58,14 +84,14 @@ interface ApiService {
         @Path("id") restaurantId: Int,
         @Query("status") status: String? = null,
         @Query("search") search: String? = null,
-        @Query("user") user: String? = null,
-        @Query("courier") courier: String? = null
+        @Query("user") customerName: String? = null,
+        @Query("courier") courierName: String? = null
     ): Response<List<Order>>
 
     @PATCH("restaurants/orders/{order_id}")
-    suspend fun changeOrderStatusByRestaurant(
+    suspend fun updateOrderStatusByRestaurant(
         @Path("order_id") orderId: Int,
-        @Body request: Map<String, String>, // status: "accepted" / "rejected" / "served"
+        @Body request: OrderStatusUpdateRequest,
         @Header("Authorization") token: String
     ): Response<MessageResponse>
 

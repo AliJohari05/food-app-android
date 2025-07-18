@@ -1,7 +1,7 @@
 package com.alijt.foodapp.view.dashboard
 
 import android.os.Bundle
-import android.util.Log // Import Log for debugging
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +14,7 @@ import com.alijt.foodapp.R
 import com.alijt.foodapp.databinding.FragmentAdminDashboardBinding
 import com.alijt.foodapp.network.RetrofitClient
 import com.alijt.foodapp.repository.AdminRepository
-import com.alijt.foodapp.utils.SessionManager
+import com.alijt.foodapp.utils.SessionManager // <-- اضافه شد
 import com.alijt.foodapp.viewmodel.AdminViewModel
 import com.alijt.foodapp.viewmodel.AdminViewModelFactory
 import com.google.android.material.tabs.TabLayoutMediator
@@ -37,15 +37,13 @@ class AdminDashboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val apiService = RetrofitClient.instance
-        val sessionManager = SessionManager(requireContext())
-        val adminRepository = AdminRepository(apiService)
-        adminViewModel = ViewModelProvider(requireActivity(), AdminViewModelFactory(adminRepository, sessionManager))
+        val sessionManager = SessionManager(requireContext()) // <-- sessionManager تعریف شد
+        val adminRepository = AdminRepository(apiService, sessionManager) // <-- sessionManager به AdminRepository پاس داده شد
+        adminViewModel = ViewModelProvider(requireActivity(), AdminViewModelFactory(adminRepository, sessionManager)) // <-- sessionManager به Factory پاس داده شد
             .get(AdminViewModel::class.java)
 
         setupViewPagerAndTabs()
         setupProfileButton()
-
-
     }
 
     private fun setupViewPagerAndTabs() {

@@ -7,7 +7,7 @@
     android:padding="8dp">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvOrders"
+        android:id="@+id/rvSellerOrders"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -17,7 +17,7 @@
         tools:listitem="@layout/item_order" />
 
     <ProgressBar
-        android:id="@+id/progressBarOrders"
+        android:id="@+id/progressBarSellerOrders"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"

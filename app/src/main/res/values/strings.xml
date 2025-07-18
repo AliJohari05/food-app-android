@@ -231,6 +231,22 @@
     <string name="no_food_items_found">No food items found.</string>
     <string name="error_fetching_food_items">Error fetching food items</string>
 
+    <string name="restaurant_logo_desc">Restaurant logo</string>
+    <string name="menu_items_title">Menu Items</string>
+
+
+    <string name="no_orders_found">No orders found.</string>
+    <string name="update_order_status_clicked">Update order %d to %s clicked</string>
+    <string name="update_order_status_dialog_title">Update Order Status</string>
+    <string name="update_order_status_dialog_message">Are you sure you want to change status of order ID %d to %s?</string>
+    <string name="confirm_button">Confirm</string>
+    <string name="order_status_accept">Accept</string>
+    <string name="order_status_reject">Reject</string>
+    <string name="order_status_served">Served</string>
+
+    <string name="error_updating_order_status">Error updating order status</string>
+    <string name="no_coupons_found">No coupons found.</string>
+    <string name="no_transactions_found">No transactions found.</string>
 
     <string-array name="user_roles">
         <item>Buyer</item>

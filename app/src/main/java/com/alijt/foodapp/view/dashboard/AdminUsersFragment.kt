@@ -38,7 +38,7 @@ class AdminUsersFragment : Fragment() {
 
         val apiService = RetrofitClient.instance
         val sessionManager = SessionManager(requireContext())
-        val adminRepository = AdminRepository(apiService)
+        val adminRepository = AdminRepository(apiService, sessionManager)
         adminViewModel = ViewModelProvider(requireActivity(), AdminViewModelFactory(adminRepository, sessionManager))
             .get(AdminViewModel::class.java)
 
@@ -62,8 +62,17 @@ class AdminUsersFragment : Fragment() {
         adminViewModel.usersList.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> { binding.progressBarUsers.visibility = View.VISIBLE }
-                is Result.Success -> {
-                    userListAdapter.submitList(result.data)
+                is Result.Success<*> -> {
+                    val data = result.data
+                    if (data is List<*>) {
+                        val userList = data as List<com.alijt.foodapp.model.User>
+                        userListAdapter.submitList(userList)
+                        if (userList.isEmpty()) {
+                            Toast.makeText(requireContext(), getString(R.string.no_users_found), Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(requireContext(), getString(R.string.error_unexpected_data_format), Toast.LENGTH_LONG).show()
+                    }
                     binding.progressBarUsers.visibility = View.GONE
                 }
                 is Result.Failure -> {
@@ -73,15 +82,18 @@ class AdminUsersFragment : Fragment() {
             }
         }
 
-        adminViewModel.userStatusUpdateResult.observe(viewLifecycleOwner) { result -> // <-- observe تغییر می‌کند
+        // <-- اینجا اصلاح شد: result.data به String تبدیل می‌شود -->
+        adminViewModel.userStatusUpdateResult.observe(viewLifecycleOwner) { result ->
             when (result) {
-                is Result.Loading -> {
-                    // نمایش لودینگ
-                }
-                is Result.Success -> {
-                    Toast.makeText(requireContext(), result.data, Toast.LENGTH_SHORT).show()
-                    // لیست کاربران پس از به‌روزرسانی در ViewModel رفرش می‌شود.
-                    // adminViewModel.fetchAllUsers() // این خط نیازی نیست اگر ViewModel خودش رفرش می‌کند
+                is Result.Loading -> { /* نمایش لودینگ */ }
+                is Result.Success<*> -> { // <-- استفاده از <*>
+                    val message = result.data // اینجا message از نوع Any? است (که اکنون انتظار String را داریم)
+                    if (message is String) { // <-- بررسی نوع
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(), getString(R.string.operation_successful), Toast.LENGTH_SHORT).show() // Fallback message
+                    }
+                    adminViewModel.fetchAllUsers() // رفرش لیست
                 }
                 is Result.Failure -> {
                     Toast.makeText(requireContext(), getString(R.string.error_updating_user_status) + ": ${result.exception.message}", Toast.LENGTH_LONG).show()
