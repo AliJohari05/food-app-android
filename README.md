@@ -133,3 +133,52 @@ aut-food-android/
 - The app is fully integrated with the backend system
 - Designed for scalability, separation of concerns (MVVM), and modularity
 - Supports dark mode and responsive layouts for different screen sizes
+
+
+
+## 📸 Preview
+
+
+
+![Login Screenshot](./app/src/main/res/drawable/LoginSC.png)
+
+
+
+![Sing Up Screenshot](./app/src/main/res/drawable/RegisterSC.png)
+
+
+## 🔧 Admin Dashboard
+
+![AdminDAllUser Screenshot](./app/src/main/res/drawable/AdminDSC.png)
+
+
+
+![AdminDAllOrder Screenshot](./app/src/main/res/drawable/AdminDOrder.png)
+
+
+
+![AdminDAllTransaction Screenshot](./app/src/main/res/drawable/adminTransaction.png)
+
+
+
+
+![AdminDAllCoupon Screenshot](./app/src/main/res/drawable/adminCoupon.png)
+
+
+## 🏪 Seller Dashboard
+
+
+![SellerDMR Screenshot](./app/src/main/res/drawable/SellerDR.png)
+
+
+
+![SellerDMR Screenshot](./app/src/main/res/drawable/SellerDOrder.png)
+
+
+![SellerDMR Screenshot](./app/src/main/res/drawable/SellerDProfile.png)
+
+
+## 🛒 Customer Dashboard
+
+
+![Buyer Screenshot](./app/src/main/res/drawable/BuerD.png)
